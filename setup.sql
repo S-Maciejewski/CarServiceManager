@@ -15,10 +15,9 @@ drop table FAKTURA;
 create sequence ID_SEQ start with 0 increment by 1 nomaxvalue minvalue 0;
 
 create table FAKTURA (
-    ID_FAKTURY number default ID_SEQ.nextval,
-    KWOTA number(2,8) not null,
-    TERMIN_PLATNOSCI date,
-    constranumber FAKTURA_PK primary key(ID_FAKTURY)
+    ID_FAKTURY number primary key,
+    KWOTA number not null,
+    TERMIN_PLATNOSCI date
 );
 
 create table SERWIS (
@@ -30,13 +29,13 @@ create table SERWIS (
 create table CZESC (
     ID_CZESCI number primary key,
     NAZWA varchar(100) not null,
-    CENA_JEDN number(2,8) not null
+    CENA_JEDN number not null
 );
 
 create table STAN_CZESCI (
     ID_SERWISU number references SERWIS(ID_SERWISU),
     ID_CZESCI number references CZESC(ID_CZESCI),
-    ILOSC number(2,8) not null
+    ILOSC number not null
 );
 
 create table PRACOWNIK (
@@ -52,13 +51,14 @@ create table SAMOCHOD (
     VIN varchar(17) not null,
     MARKA varchar(100),
     MODEL varchar(100),
-    POJEMNOSC number(1,5)
+    POJEMNOSC number,
+    ROK_PRODUKCJI number
 );
 
 create table SAMOCHOD_ZASTEPCZY (
     ID_SAMOCHODU_ZASTEPCZEGO number primary key,
     CZY_WYPOZYCZONY char(3), -- 'TAK' albo 'NIE'
-    constranumber SAMOCHOD_ZASTEPCZY_FK foreign key (ID_SAMOCHODU_ZASTEPCZEGO) references SAMOCHOD(ID_SAMOCHODU)
+    constraint SAMOCHOD_ZASTEPCZY_FK foreign key (ID_SAMOCHODU_ZASTEPCZEGO) references SAMOCHOD(ID_SAMOCHODU)
 );
 
 create table KLIENT (
@@ -90,3 +90,13 @@ create table AKCJA_SERWISOWA (
     DATA_ZAKONCZENIA date
 );
 
+
+insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9PJ9', 'WP0ZZZ99ZTS392124', 'Seat', 'Leon', 1197, 2014);
+insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9WP6', 'WP0ZZZ62ZTS192398', 'Porsche', 'Cayman', 3392, 2013);
+
+insert into KLIENT values (ID_SEQ.nextval, 'Bankowa 12, Lubicz Górny');
+insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'SEBASTIAN', 'MACIEJEWSKI');
+
+insert into AKCJA_SERWISOWA values (ID_SEQ.nextval, 1, 4, 'Wymiana świec zapłonowych', null, null, null, (select sysdate from dual), null);
+
+select * from AKCJA_SERWISOWA;
