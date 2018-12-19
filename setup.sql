@@ -120,6 +120,22 @@ BEGIN
     END IF;
 END GET_CLIENT_BILL;
 
+CREATE SEQUENCE ID_KLIENTA START WITH 5 INCREMENT BY 1 NOMAXVALUE;
+
+create or replace PROCEDURE WSTAW_KLIENTA(rodzaj VARCHAR2, imie_nazwa VARCHAR2, nazwisko_nip VARCHAR2, adres_in VARCHAR2) IS
+    id_kl NUMBER;                                         
+BEGIN
+    IF rodzaj = 'IND' THEN 
+        id_kl := ID_KLIENTA.NEXTVAL;
+        INSERT INTO KLIENT VALUES (id_kl, adres_in);
+        INSERT INTO KLIENT_INDYWIDUALNY VALUES (id_kl, imie_nazwa, nazwisko_nip);
+    ELSIF rodzaj = 'FIRMA' THEN
+        id_kl := ID_KLIENTA.NEXTVAL;
+        INSERT INTO KLIENT VALUES (id_kl, adres_in);
+        INSERT INTO FIRMA VALUES (id_kl, imie_nazwa, nazwisko_nip);
+    END IF;
+END WSTAW_KLIENTA;
+
 
 -- Przykładowe dane
 
