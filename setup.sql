@@ -12,7 +12,13 @@ drop table SAMOCHOD_ZASTEPCZY;
 drop table SAMOCHOD;
 drop table FAKTURA;
 
-create sequence ID_SEQ start with 0 increment by 1 nomaxvalue minvalue 0;
+drop sequence ID_SEQ;
+
+drop index PRACOWNIK_I; 
+drop index AKCJA_I;
+drop index AKCJA_DATA_I;
+drop index CZESC_NAZWA_I;
+drop index STAN_CZESCI_I;
 
 create table FAKTURA (
     ID_FAKTURY number primary key,
@@ -90,12 +96,22 @@ create table AKCJA_SERWISOWA (
     DATA_ZAKONCZENIA date
 );
 
+create sequence ID_SEQ start with 0 increment by 1 nomaxvalue minvalue 0;
+
+create index AKCJA_I on AKCJA_SERWISOWA (ID_SAMOCHODU, ID_KLIENTA, ID_FAKTURY);
+create index AKCJA_DATA_I on AKCJA_SERWISOWA (DATA_ROZPOCZECIA);
+create index CZESC_NAZWA_I on CZESC (NAZWA);
+create index STAN_CZESCI_I on STAN_CZESCI (ID_CZESCI);
+create index PRACOWNIK_I on PRACOWNIK (ID_SERWISU);
+
+
+-- Przykładowe dane
 
 insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9PJ9', 'WP0ZZZ99ZTS392124', 'Seat', 'Leon', 1197, 2014);
 insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9WP6', 'WP0ZZZ62ZTS192398', 'Porsche', 'Cayman', 3392, 2013);
 
 insert into KLIENT values (ID_SEQ.nextval, 'Bankowa 12, Lubicz Górny');
-insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'SEBASTIAN', 'MACIEJEWSKI');
+insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'Sebastian', 'Maciejewski');
 
 insert into AKCJA_SERWISOWA values (ID_SEQ.nextval, 1, 4, 'Wymiana świec zapłonowych', null, null, null, (select sysdate from dual), null);
 
