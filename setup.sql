@@ -104,6 +104,22 @@ create index CZESC_NAZWA_I on CZESC (NAZWA);
 create index STAN_CZESCI_I on STAN_CZESCI (ID_CZESCI);
 create index PRACOWNIK_I on PRACOWNIK (ID_SERWISU);
 
+CREATE OR REPLACE FUNCTION GET_CLIENT_BILL(client_id IN NUMBER) RETURN NUMBER IS
+    bill NUMBER;
+    fetched NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO fetched FROM AKCJA_SERWISOWA WHERE id_klienta = client_id;
+    IF fetched > 0 THEN
+        SELECT SUM(kwota) INTO bill 
+        FROM AKCJA_SERWISOWA JOIN FAKTURA USING (id_faktury) 
+        WHERE id_klienta = client_id and (data_zakonczenia IS NULL OR data_zakonczenia > SYSDATE);
+        
+        RETURN bill;
+    ELSE 
+        RETURN 0;
+    END IF;
+END GET_CLIENT_BILL;
+
 
 -- Przykładowe dane
 
