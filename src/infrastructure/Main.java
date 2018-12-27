@@ -16,20 +16,19 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/mainScreen.fxml"));
         primaryStage.setTitle("CarServiceManager");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
 
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         ConnectionManager.connect("SEBA", "seba");
-        ResultSet rs = ConnectionManager.getStatementResultSet("SELECT * FROM ALL_OBJECTS WHERE OBJECT_NAME IN ('WSTAW_KLIENTA')");
-        while(rs.next()){
-            System.out.println(rs.getString(2));
-        }
-        ClientService.addKlient(true, "Adam", "Nowak", "Polna 12");
-//        ConnectionManager.closeAndCommit();
-//        launch(args);
+
+        ClientService.addKlient(true, "Rafael", "Klaus", "Piotrowo 3");
+        ClientService.addKlient(true, "Jan", "Teśner", "Jeżyce gdzieś");
+
+        launch(args);
+//        ConnectionManager.closeAndCommit();   //TODO zdecydować czy auto-commmit to dobry pomysł
     }
 
 }

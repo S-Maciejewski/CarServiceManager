@@ -97,6 +97,8 @@ create table AKCJA_SERWISOWA (
 );
 
 create sequence ID_SEQ start with 0 increment by 1 nomaxvalue minvalue 0;
+CREATE SEQUENCE ID_KLIENTA START WITH 5 INCREMENT BY 1 NOMAXVALUE;
+
 
 create index AKCJA_I on AKCJA_SERWISOWA (ID_SAMOCHODU, ID_KLIENTA, ID_FAKTURY);
 create index AKCJA_DATA_I on AKCJA_SERWISOWA (DATA_ROZPOCZECIA);
@@ -120,7 +122,6 @@ BEGIN
     END IF;
 END GET_CLIENT_BILL;
 
-CREATE SEQUENCE ID_KLIENTA START WITH 5 INCREMENT BY 1 NOMAXVALUE;
 
 create or replace PROCEDURE WSTAW_KLIENTA(rodzaj VARCHAR2, imie_nazwa VARCHAR2, nazwisko_nip VARCHAR2, adres_in VARCHAR2) IS
     id_kl NUMBER;                                         
@@ -136,7 +137,8 @@ BEGIN
     END IF;
 END WSTAW_KLIENTA;
 
-
+execute WSTAW_KLIENTA('IND', 'Jan', 'Kowalski', 'Akacjowa 4');
+execute WSTAW_KLIENTA('IND', 'Adam', 'Nowak', 'Polna 12');
 -- Przykładowe dane
 
 insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9PJ9', 'WP0ZZZ99ZTS392124', 'Seat', 'Leon', 1197, 2014);
@@ -148,3 +150,11 @@ insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'Sebastian', 'Maciejewsk
 insert into AKCJA_SERWISOWA values (ID_SEQ.nextval, 1, 4, 'Wymiana świec zapłonowych', null, null, null, (select sysdate from dual), null);
 
 select * from AKCJA_SERWISOWA;
+
+select * from SAMOCHOD;
+
+select ID_KLIENTA, IMIE, NAZWISKO, ADRES from KLIENT natural join KLIENT_INDYWIDUALNY;
+
+--commit;
+
+--SELECT * FROM ALL_OBJECTS WHERE OBJECT_NAME IN ('WSTAW_KLIENTA');
