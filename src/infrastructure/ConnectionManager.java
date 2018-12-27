@@ -24,12 +24,23 @@ public class ConnectionManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Unable to connect");
+        }
+    }
+
+    public static void closeAndCommit() {
+        try {
+            connection.commit();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Unable to commit and close connection");
         }
     }
 
     public static ResultSet getStatementResultSet(String SqlStatement) {
         try {
-            return (ResultSet) statement.executeQuery(SqlStatement);
+            return statement.executeQuery(SqlStatement);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Invalid SQL statement");
@@ -37,5 +48,14 @@ public class ConnectionManager {
         return null;
     }
 
+    public static void executeProcedure(String SqlStatement) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SqlStatement);
+            callableStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Invalid SQL statement");
+        }
+    }
 
 }
