@@ -307,6 +307,8 @@ execute DODAJ_CZESC(id_serwisu => 703, id_czesci => 205, liczba => 5);
 execute DODAJ_CZESC(id_serwisu => 704, id_czesci => 201, liczba => 7);
 execute DODAJ_CZESC(id_serwisu => 704, id_czesci => 205, liczba => 9);
 
+execute DODAJ_AKCJE_SERWISOWA(602, 2, '27-12-2018', 'Wymiana oleju', 150, '13-12-2018', 501, 603, data_zakonczenia => '01-01-2019');
+
 commit;
 
 --SELECT * FROM ALL_OBJECTS WHERE OBJECT_NAME IN ('WSTAW_KLIENTA');
