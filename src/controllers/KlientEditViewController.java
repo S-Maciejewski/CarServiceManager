@@ -1,5 +1,6 @@
 package controllers;
 
+import infrastructure.ConnectionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -27,8 +28,7 @@ public class KlientEditViewController {
             delete.setVisible(false);
             confirm.setOnAction((event) -> confirmNew());
         }
-        if(ID != null) {
-            System.out.println("Modify record with ID " + ID);
+        if (ID != null) {
             czyIndywidualny.setSelected(indywidualny);
             czyIndywidualny.setDisable(true);
             ResultSet resultSet = KlientService.getKlient(indywidualny, ID);
@@ -58,6 +58,10 @@ public class KlientEditViewController {
         }
     }
 
+    public void deleteKlient() {
+        KlientService.deleteKlient(czyIndywidualny.isSelected(), id.getText());
+        close();
+    }
 
     private boolean validate() {
         if (adres.getText().length() > 100)

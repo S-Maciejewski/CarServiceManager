@@ -32,7 +32,7 @@
         <Font size="16.0" fx:id="x2" />
       </font>
     </Button>
-    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="230.0" mnemonicParsing="false" text="Usuń klienta" visible="true" />
+    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="230.0" mnemonicParsing="false" onAction="#deleteKlient" text="Usuń klienta" visible="true" />
     <Label fx:id="errorMsg" font="$x2" layoutX="140.0" layoutY="270.0" text="Błąd - dane niezgodne z ograniczeniami" textFill="#ff3333" visible="false" />
   </children>
 </AnchorPane>

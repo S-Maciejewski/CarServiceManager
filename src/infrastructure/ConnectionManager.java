@@ -58,4 +58,12 @@ public class ConnectionManager {
         }
     }
 
+    public static void executeStatement(String SqlStatement) {
+        try {
+            statement.executeQuery(SqlStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Invalid SQL statement");
+        }
+    }
 }

@@ -47,13 +47,14 @@ public class MainScreenController {
         openKlientEditModal(false, firmyList.getSelectionModel().getSelectedItem(), false);
     }
 
-    public void openKlientEditModal(boolean add, String ID, boolean indywidualny) throws IOException, SQLException {
+    public void openKlientEditModal(boolean add, String selectedString, boolean indywidualny) throws IOException, SQLException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/klientEditView.fxml"));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Modyfikacja klienta");
-        loader.<KlientEditViewController>getController().setContext(add, ID.substring(0, ID.indexOf(',')), indywidualny);
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<KlientEditViewController>getController().setContext(add, id, indywidualny);
         stage.showAndWait();
         showKlienci();
     }
