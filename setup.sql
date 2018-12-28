@@ -206,6 +206,42 @@ begin
     end if;
 end WSTAW_PRACOWNIKA;
 /
+create or replace procedure DODAJ_CZESC(id_serwisu number default null, nazwa_serwisu varchar2 default null, id_czesci number default null, nazwa_czesci varchar2 default null, liczba number) is
+    id_ser number := null;
+    id_cz number := null;
+    czy_istnieje_serwis number;
+    czy_istnieje_czesc number;
+    czy_istnieje_stan number;
+begin
+    if id_serwisu is null and nazwa_serwisu is not null then
+        select COUNT(id_serwisu) into czy_istnieje_serwis from SERWIS where nazwa = nazwa_serwisu;
+        if czy_istnieje_serwis > 0 then
+            select id_serwisu into id_ser from SERWIS where nazwa = nazwa_serwisu;
+        end if;
+    elsif id_serwisu is not null then
+        id_ser := id_serwisu;
+    end if;
+    
+    if id_czesci is null and nazwa_czesci is not null then
+        select COUNT(id_czesci) into czy_istnieje_czesc from CZESC where nazwa = nazwa_czesci;
+        if czy_istnieje_czesc > 0 then
+            select id_czesci into id_cz from CZESC where nazwa = nazwa_czesci;
+        end if;
+    elsif id_czesci is not null then
+        id_cz := id_czesci;
+    end if;
+    
+    if id_ser is not null and id_cz is not null then
+        select count(*) into czy_istnieje_stan from STAN_CZESCI where id_serwisu = id_ser and id_czesci = id_cz;
+        
+        if czy_istnieje_stan = 1 then
+            update STAN_CZESCI set ilosc = ilosc + liczba where STAN_CZESCI.id_serwisu = id_ser and id_czesci = id_cz;
+        elsif czy_istnieje_stan = 0 then
+            insert into STAN_CZESCI values (id_ser, id_cz, liczba);
+        end if;
+    end if;
+end DODAJ_CZESC;
+/
 execute WSTAW_KLIENTA('IND', 'Jan', 'Kowalski', 'Glicynii 48, 04-855 Warszawa');
 execute WSTAW_KLIENTA('IND', 'Adam', 'Nowak', 'Chmielna 105, 51-212 Wrocław');
 execute WSTAW_KLIENTA('IND', 'Gustaw', 'Dąbrowski', 'Świechockiego 139, 80-041 Gdańsk');
