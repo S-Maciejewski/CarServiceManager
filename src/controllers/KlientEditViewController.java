@@ -1,17 +1,18 @@
 package controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import services.ClientService;
+import services.KlientService;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
-public class ClientEditViewController {
+public class KlientEditViewController {
     @FXML
     private TextField id, imieNazwa, nazwiskoNIP, adres;
     @FXML
@@ -21,16 +22,27 @@ public class ClientEditViewController {
     @FXML
     private Label errorMsg;
 
-    public void setContext(boolean add) {
+    public void setContext(boolean add, String ID, boolean indywidualny) throws SQLException {
         if (add) {
             delete.setVisible(false);
             confirm.setOnAction((event) -> confirmNew());
+        }
+        if(ID != null) {
+            System.out.println("Modify record with ID " + ID);
+            czyIndywidualny.setSelected(indywidualny);
+            czyIndywidualny.setDisable(true);
+            ResultSet resultSet = KlientService.getKlient(indywidualny, ID);
+            resultSet.next();
+            id.setText(resultSet.getString(1));
+            imieNazwa.setText(resultSet.getString(2));
+            nazwiskoNIP.setText(resultSet.getString(3));
+            adres.setText(resultSet.getString(4));
         }
     }
 
     public void confirmNew() {
         if (validate()) {
-            ClientService.addKlient(czyIndywidualny.isSelected(), imieNazwa.getText(), nazwiskoNIP.getText(), adres.getText());
+            KlientService.addKlient(czyIndywidualny.isSelected(), imieNazwa.getText(), nazwiskoNIP.getText(), adres.getText());
             close();
         } else {
             errorMsg.setVisible(true);

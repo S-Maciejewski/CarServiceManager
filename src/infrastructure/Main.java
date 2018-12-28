@@ -5,10 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import services.ClientService;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -24,9 +20,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         ConnectionManager.connect("SEBA", "seba");
 
-//        ClientService.addKlient(true, "Rafael", "Klaus", "Piotrowo 3");
-//        ClientService.addKlient(true, "Jan", "Teśner", "Jeżyce gdzieś");
-//        ClientService.addKlient(false, "Politechnika Poznańska", "7770003699", "pl. Marii Skłodowskiej-Curie 5, Poznań");
+//        KlientService.addKlient(true, "Rafael", "Klaus", "Piotrowo 3");
+//        KlientService.addKlient(true, "Jan", "Teśner", "Jeżyce gdzieś");
+//        KlientService.addKlient(false, "Politechnika Poznańska", "7770003699", "pl. Marii Skłodowskiej-Curie 5, Poznań");
 
         launch(args);
 //        ConnectionManager.closeAndCommit();   //TODO zdecydować czy auto-commmit to dobry pomysł

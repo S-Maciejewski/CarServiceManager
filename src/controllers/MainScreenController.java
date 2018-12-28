@@ -5,9 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,16 +35,27 @@ public class MainScreenController {
         firmyList.setItems(klienciBiznesowi);
     }
 
-    public void addKlient() throws IOException {
+    public void addKlient() throws IOException, SQLException {
+        openKlientEditModal(true, null, false);
+    }
+
+    public void modifyKlientIndywidualny() throws IOException, SQLException {
+        openKlientEditModal(false, klienciIndywidualniList.getSelectionModel().getSelectedItem(), true);
+    }
+
+    public void modifyFirma() throws IOException, SQLException {
+        openKlientEditModal(false, firmyList.getSelectionModel().getSelectedItem(), false);
+    }
+
+    public void openKlientEditModal(boolean add, String ID, boolean indywidualny) throws IOException, SQLException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/clientEditView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/klientEditView.fxml"));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Modyfikacja klienta");
-
-        loader.<ClientEditViewController>getController().setContext(true);
-
+        loader.<KlientEditViewController>getController().setContext(add, ID.substring(0, ID.indexOf(',')), indywidualny);
         stage.showAndWait();
+        showKlienci();
     }
 
 }

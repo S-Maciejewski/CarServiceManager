@@ -20,13 +20,13 @@
                     <Font size="14.0" />
                   </font>
                 </Button>
-                <ListView id="clientList" fx:id="klienciIndywidualniList" layoutX="14.0" layoutY="51.0" prefHeight="300.0" prefWidth="1172.0" />
+                <ListView id="clientList" fx:id="klienciIndywidualniList" layoutX="14.0" layoutY="51.0" onMouseClicked="#modifyKlientIndywidualny" prefHeight="300.0" prefWidth="1172.0" />
                 <Label layoutX="14.0" layoutY="14.0" text="Klienci indywidualni">
                   <font>
                     <Font name="System Bold" size="18.0" fx:id="x1" />
                   </font>
                 </Label>
-                <ListView id="clientList" fx:id="firmyList" layoutX="14.0" layoutY="413.0" prefHeight="300.0" prefWidth="1172.0" />
+                <ListView id="clientList" fx:id="firmyList" layoutX="14.0" layoutY="413.0" onMouseClicked="#modifyFirma" prefHeight="300.0" prefWidth="1172.0" />
                 <Label font="$x1" layoutX="14.0" layoutY="368.0" text="Klienci biznesowi" />
                 <Button layoutX="1046.0" mnemonicParsing="false" onAction="#addKlient" prefHeight="30.0" prefWidth="140.0" text="Dodaj klienta" AnchorPane.topAnchor="366.0">
                   <font>

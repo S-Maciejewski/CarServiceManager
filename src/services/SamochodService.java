@@ -2,7 +2,7 @@ package services;
 
 import infrastructure.ConnectionManager;
 
-public class CarService {
+public class SamochodService {
 
     public static void addSamochod(String numRej, String vin, String marka, String model, String pojemosc, String rokProdukcji) {
         marka = marka != null ? marka : "null";
