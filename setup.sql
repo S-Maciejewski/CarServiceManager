@@ -224,6 +224,35 @@ begin
     end if;
 end DODAJ_CZESC;
 /
+create or replace procedure DODAJ_AKCJE_SERWISOWA(id_samochodu number, 
+                                                  id_klienta number, 
+                                                  data_rozpoczecia varchar2 default to_char(sysdate, 'DD-MM-YYYY'), 
+                                                  opis varchar2 default null, 
+                                                  kwota number default null, 
+                                                  termin_platnosci varchar2 default null, 
+                                                  id_pracownika number default null, 
+                                                  id_samochodu_zastepczego number default null, 
+                                                  data_zakonczenia varchar2 default null) is
+    gen_id_akcji number;
+    gen_id_faktury number;
+begin
+    gen_id_akcji := ID_AKCJI_SERWISOWEJ.NEXTVAL;
+    if kwota is not null then 
+        gen_id_faktury := ID_FAKTURY.NEXTVAL;
+        WSTAW_FAKTURE(kwota, termin_platnosci, gen_id_faktury);
+    end if;
+    
+    insert into AKCJA_SERWISOWA values (gen_id_akcji, 
+                                        id_samochodu, 
+                                        id_klienta, 
+                                        opis, 
+                                        gen_id_faktury, 
+                                        id_pracownika, 
+                                        id_samochodu_zastepczego, 
+                                        to_date(data_rozpoczecia, 'DD-MM-YYYY'),
+                                        to_date(data_zakonczenia, 'DD-MM-YYYY'));
+end DODAJ_AKCJE_SERWISOWA;
+/
 execute WSTAW_KLIENTA('IND', 'Jan', 'Kowalski', 'Glicynii 48, 04-855 Warszawa');
 execute WSTAW_KLIENTA('IND', 'Adam', 'Nowak', 'Chmielna 105, 51-212 Wrocław');
 execute WSTAW_KLIENTA('IND', 'Gustaw', 'Dąbrowski', 'Świechockiego 139, 80-041 Gdańsk');
