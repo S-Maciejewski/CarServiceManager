@@ -7,13 +7,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.ClientEditViewController">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.ClientEditViewController">
   <children>
-    <Label layoutX="237.0" layoutY="14.0" text="Edycja klienta">
+    <Label layoutX="230.0" layoutY="26.0" text="Edycja klienta">
       <font>
-        <Font size="18.0" />
+        <Font size="20.0" />
       </font>
     </Label>
-    <CheckBox layoutX="389.0" layoutY="58.0" mnemonicParsing="false" text="Klient indywidualny" />
+    <CheckBox fx:id="czyIndywidualny" disable="false" layoutX="376.0" layoutY="133.0" mnemonicParsing="false" selected="false" text="Klient indywidualny" textAlignment="LEFT" wrapText="false" />
+    <TextField id="nazwiskoNip" fx:id="nazwiskoNIP" editable="true" layoutX="137.0" layoutY="149.0" prefWidth="200.0" />
+    <TextField fx:id="imieNazwa" editable="true" layoutX="137.0" layoutY="115.0" prefWidth="200.0" />
+    <Label layoutX="26.0" layoutY="120.0" text="Imię / Nazwa">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="20.0" layoutY="152.0" text="Nazwisko / NIP" />
+    <TextField fx:id="adres" editable="true" layoutX="137.0" layoutY="181.0" prefWidth="388.0" />
+    <Label font="$x1" layoutX="51.0" layoutY="184.0" text="Adres" />
+    <TextField id="idField" fx:id="id" editable="false" layoutX="137.0" layoutY="82.0" prefWidth="200.0" />
+    <Label font="$x1" layoutX="64.0" layoutY="85.0" text="ID" />
+    <Button fx:id="confirm" layoutX="376.0" layoutY="230.0" mnemonicParsing="false" onAction="#confirmChanges" text="Zatwierdź">
+      <font>
+        <Font size="16.0" fx:id="x2" />
+      </font>
+    </Button>
+    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="230.0" mnemonicParsing="false" text="Usuń klienta" visible="true" />
+    <Label fx:id="errorMsg" font="$x2" layoutX="140.0" layoutY="270.0" text="Błąd - dane niezgodne z ograniczeniami" textFill="#ff3333" visible="false" />
   </children>
 </AnchorPane>
