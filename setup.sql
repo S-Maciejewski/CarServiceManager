@@ -265,6 +265,19 @@ execute WSTAW_PRACOWNIKA('Alojzy', 'Tomaszewski', nazwa_serwisu => 'Warsztat sam
 execute WSTAW_PRACOWNIKA('Jakub', 'Woźniak', 704);
 execute WSTAW_PRACOWNIKA('Miłosz', 'Dudek', nazwa_serwisu => 'Warsztat SAMTECH');
 
+execute DODAJ_CZESC(id_serwisu => 701, id_czesci => 201, liczba => 2);
+execute DODAJ_CZESC(id_serwisu => 701, id_czesci => 202, liczba => 4);
+execute DODAJ_CZESC(id_serwisu => 701, id_czesci => 203, liczba => 2);
+execute DODAJ_CZESC(id_serwisu => 701, nazwa_czesci => 'Przedni reflektor', liczba => 7);
+execute DODAJ_CZESC(nazwa_serwisu => 'Warsztat samochodowy JANSEB', id_czesci => 205, liczba => 4);
+execute DODAJ_CZESC(id_serwisu => 702, id_czesci => 202, liczba => 1);
+execute DODAJ_CZESC(nazwa_serwisu => 'Warsztat samochodowy MACTECH', nazwa_czesci => 'Rozrusznik', liczba => 3);
+execute DODAJ_CZESC(id_serwisu => 702, id_czesci => 204, liczba => 2);
+execute DODAJ_CZESC(id_serwisu => 703, id_czesci => 204, liczba => 6);
+execute DODAJ_CZESC(id_serwisu => 703, id_czesci => 205, liczba => 5);
+execute DODAJ_CZESC(id_serwisu => 704, id_czesci => 201, liczba => 7);
+execute DODAJ_CZESC(id_serwisu => 704, id_czesci => 205, liczba => 9);
+
 commit;
 
 --SELECT * FROM ALL_OBJECTS WHERE OBJECT_NAME IN ('WSTAW_KLIENTA');
