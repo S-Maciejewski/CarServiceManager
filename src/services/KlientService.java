@@ -16,14 +16,19 @@ public class KlientService {
                 ConnectionManager.getStatementResultSet("select ID_KLIENTA, NAZWA, NIP, ADRES from KLIENT natural join FIRMA where ID_KLIENTA='" + ID + "'");
     }
 
-    //TODO usuwanie i modyfikowanie rekordu
-
     public static void deleteKlient(Boolean czyIndywidualny, String ID) {
-        if (czyIndywidualny) {
+        if (czyIndywidualny)
             ConnectionManager.executeStatement("delete from KLIENT_INDYWIDUALNY where ID_KLIENTA='" + ID + "'");
-        } else {
+        else
             ConnectionManager.executeStatement("delete from FIRMA where ID_KLIENTA='" + ID + "'");
-        }
         ConnectionManager.executeStatement("delete from KLIENT where ID_KLIENTA='" + ID + "'");
+    }
+
+    public static void updateKlient(String ID, Boolean czyIndywidualny, String imieNazwa, String nazwiskoNip, String adres) {
+        if (czyIndywidualny)
+            ConnectionManager.executeStatement("update KLIENT_INDYWIDUALNY set IMIE = '" + imieNazwa + "', NAZWISKO = '" + nazwiskoNip + "' where ID_KLIENTA='" + ID + "'");
+        else
+            ConnectionManager.executeStatement("update FIRMA set NAZWA = '" + imieNazwa + "', NIP = '" + nazwiskoNip + "' where ID_KLIENTA='" + ID + "'");
+        ConnectionManager.executeStatement("update KLIENT set ADRES = '" + adres + "' where ID_KLIENTA='" + ID + "'");
     }
 }

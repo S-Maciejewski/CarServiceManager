@@ -51,7 +51,7 @@ public class KlientEditViewController {
 
     public void confirmChanges() {
         if (validate()) {
-            //TODO update relacji w serwisie
+            KlientService.updateKlient(id.getText(), czyIndywidualny.isSelected(), imieNazwa.getText(), nazwiskoNIP.getText(), adres.getText());
             close();
         } else {
             errorMsg.setVisible(true);
