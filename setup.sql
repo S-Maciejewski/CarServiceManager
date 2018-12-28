@@ -188,24 +188,6 @@ begin
     end if;
 end WSTAW_PRACOWNIKA;
 /
-create or replace procedure DODAJ_CZESCI(id_serwisu number default null, nazwa_serwisu varchar2 default null, id_czesci number default null, nazwa_czesci varchar2 default null, liczba number) is
-    gen_id_pracownika number;   
-    id_ser number;
-    czy_istnieje number;
-begin
-    if id_serwisu is null and nazwa_serwisu is not null then
-        select COUNT(id_serwisu) into czy_istnieje from SERWIS where nazwa = nazwa_serwisu;
-        if czy_istnieje > 0 then
-            select id_serwisu into id_ser from SERWIS where nazwa = nazwa_serwisu;
-            gen_id_pracownika := ID_PRACOWNIKA.NEXTVAL;
-            insert into PRACOWNIK values (gen_id_pracownika, imie, nazwisko, id_ser);
-        end if;
-    elsif id_serwisu is not null then
-        gen_id_pracownika := ID_PRACOWNIKA.NEXTVAL;
-        insert into PRACOWNIK values (gen_id_pracownika, imie, nazwisko, id_serwisu);
-    end if;
-end WSTAW_PRACOWNIKA;
-/
 create or replace procedure DODAJ_CZESC(id_serwisu number default null, nazwa_serwisu varchar2 default null, id_czesci number default null, nazwa_czesci varchar2 default null, liczba number) is
     id_ser number := null;
     id_cz number := null;
