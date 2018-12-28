@@ -139,15 +139,17 @@ END WSTAW_KLIENTA;
 
 execute WSTAW_KLIENTA('IND', 'Jan', 'Kowalski', 'Akacjowa 4');
 execute WSTAW_KLIENTA('IND', 'Adam', 'Nowak', 'Polna 12');
+execute WSTAW_KLIENTA('FIRMA', 'Politechnika Poznańska', '7770003699', 'pl. Marii Skłodowskiej-Curie 5, Poznań');
+
 -- Przykładowe dane
 
-insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9PJ9', 'WP0ZZZ99ZTS392124', 'Seat', 'Leon', 1197, 2014);
-insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9WP6', 'WP0ZZZ62ZTS192398', 'Porsche', 'Cayman', 3392, 2013);
+-- insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9PJ9', 'WP0ZZZ99ZTS392124', 'Seat', 'Leon', 1197, 2014);
+-- insert into SAMOCHOD values (ID_SEQ.nextval, 'CTR9WP6', 'WP0ZZZ62ZTS192398', 'Porsche', 'Cayman', 3392, 2013);
 
-insert into KLIENT values (ID_SEQ.nextval, 'Bankowa 12, Lubicz Górny');
-insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'Sebastian', 'Maciejewski');
+-- insert into KLIENT values (ID_SEQ.nextval, 'Bankowa 12, Lubicz Górny');
+-- insert into KLIENT_INDYWIDUALNY values (ID_SEQ.currval, 'Sebastian', 'Maciejewski');
 
-insert into AKCJA_SERWISOWA values (ID_SEQ.nextval, 1, 4, 'Wymiana świec zapłonowych', null, null, null, (select sysdate from dual), null);
+-- insert into AKCJA_SERWISOWA values (ID_SEQ.nextval, 1, 4, 'Wymiana świec zapłonowych', null, null, null, (select sysdate from dual), null);
 
 select * from AKCJA_SERWISOWA;
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.ClientEditViewController">
+  <children>
+    <Label layoutX="237.0" layoutY="14.0" text="Edycja klienta">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <CheckBox layoutX="389.0" layoutY="58.0" mnemonicParsing="false" text="Klient indywidualny" />
+  </children>
+</AnchorPane>

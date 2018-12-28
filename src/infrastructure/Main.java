@@ -24,8 +24,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         ConnectionManager.connect("SEBA", "seba");
 
-        ClientService.addKlient(true, "Rafael", "Klaus", "Piotrowo 3");
-        ClientService.addKlient(true, "Jan", "Teśner", "Jeżyce gdzieś");
+//        ClientService.addKlient(true, "Rafael", "Klaus", "Piotrowo 3");
+//        ClientService.addKlient(true, "Jan", "Teśner", "Jeżyce gdzieś");
+//        ClientService.addKlient(false, "Politechnika Poznańska", "7770003699", "pl. Marii Skłodowskiej-Curie 5, Poznań");
 
         launch(args);
 //        ConnectionManager.closeAndCommit();   //TODO zdecydować czy auto-commmit to dobry pomysł
