@@ -152,10 +152,14 @@ begin
     insert into CZESC values (gen_id_czesci, nazwa, cena_jedn);
 end WSTAW_CZESC;
 /
-create or replace procedure WSTAW_FAKTURE(kwota varchar2, termin_platnosci varchar2 default NULL) is
+create or replace procedure WSTAW_FAKTURE(kwota varchar2, termin_platnosci varchar2 default NULL, idfaktury number default null) is
     gen_id_faktury number;                                         
 begin
-    gen_id_faktury := ID_FAKTURY.NEXTVAL;
+    if idfaktury is null then 
+        gen_id_faktury := ID_FAKTURY.NEXTVAL;
+    else 
+        gen_id_faktury := idfaktury;
+    end if;
     if termin_platnosci is null then
         insert into FAKTURA values (gen_id_faktury, kwota, SYSDATE+14);
     else 
