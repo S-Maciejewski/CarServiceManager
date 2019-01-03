@@ -57,7 +57,7 @@ create table SAMOCHOD (
 );
 create table SAMOCHOD_ZASTEPCZY (
     ID_SAMOCHODU_ZASTEPCZEGO number primary key,
-    CZY_WYPOZYCZONY char(3), -- 'TAK' albo 'NIE'
+    CZY_WYPOZYCZONY char(3), -- 'Tak' albo 'Nie'
     constraint SAMOCHOD_ZASTEPCZY_FK foreign key (ID_SAMOCHODU_ZASTEPCZEGO) references SAMOCHOD(ID_SAMOCHODU)
 );
 create table KLIENT (
@@ -141,7 +141,7 @@ begin
     gen_id_samochodu := ID_SAMOCHODU.NEXTVAL;
     insert into SAMOCHOD values (gen_id_samochodu, nr_rej, vin, marka, model, pojemnosc, rok_produkcji);
     if rodzaj = 'ZASTEPCZY' then 
-        insert into SAMOCHOD_ZASTEPCZY values (gen_id_samochodu, 'N');
+        insert into SAMOCHOD_ZASTEPCZY values (gen_id_samochodu, 'Nie');
     end if;
 end WSTAW_SAMOCHOD;
 /
@@ -316,3 +316,9 @@ execute DODAJ_AKCJE_SERWISOWA(602, 2, '27-12-2018', 'Wymiana oleju', 150, '13-12
 commit;
 
 --SELECT * FROM ALL_OBJECTS WHERE OBJECT_NAME IN ('WSTAW_KLIENTA');
+--select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC from SAMOCHOD where ID_SAMOCHODU = '602';
+--
+--select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC, ROK_PRODUKCJI, CZY_WYPOZYCZONY from SAMOCHOD natural join SAMOCHOD_ZASTEPCZY;
+--select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC, ROK_PRODUKCJI, CZY_WYPOZYCZONY from SAMOCHOD_ZASTEPCZY left outer join SAMOCHOD on ID_SAMOCHODU_ZASTEPCZEGO = ID_SAMOCHODU;
+--delete from SAMOCHOD_ZASTEPCZY where ID_SAMOCHODU_ZASTEPCZEGO = '603';
+--delete from SAMOCHOD where ID_SAMOCHODU = '603';
