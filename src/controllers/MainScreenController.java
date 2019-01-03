@@ -32,6 +32,8 @@ public class MainScreenController {
             klienciBiznesowi.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
         }
         firmyList.setItems(klienciBiznesowi);
+        klienciIndywidualniList.getSelectionModel().clearSelection();
+        firmyList.getSelectionModel().clearSelection();
     }
 
     public void addKlient() throws IOException, SQLException {
@@ -60,6 +62,7 @@ public class MainScreenController {
         showKlienci();
     }
 
+
     public void showSamochody() throws SQLException {
         ObservableList<String> samochody = FXCollections.observableArrayList();
         ResultSet resultSet = SamochodService.getSamochody(false);
@@ -75,6 +78,8 @@ public class MainScreenController {
                     ", " + resultSet.getString(5) + ", " + resultSet.getString(6) + ", " + resultSet.getString(7) + ", " + resultSet.getString(8));
         }
         samochodyZastepczeList.setItems(samochodyZastepcze);
+        samochodyList.getSelectionModel().clearSelection();
+        samochodyZastepczeList.getSelectionModel().clearSelection();
     }
 
     public void addSamochod() throws IOException, SQLException {
@@ -101,5 +106,45 @@ public class MainScreenController {
         loader.<SamochodEditViewController>getController().setContext(add, id, zastepczy);
         stage.showAndWait();
         showSamochody();
+    }
+
+    public void showSerwisy(){
+
+    }
+
+    public void addSerwis(){
+
+    }
+
+    public void selectSerwis(){
+
+    }
+
+    public void modifySerwis(){
+
+    }
+
+    public void addPracownik(){
+
+    }
+
+    public void modifyPracownik(){
+
+    }
+
+    public void addStanCzesci(){
+
+    }
+
+    public void modifyStanCzesci(){
+
+    }
+
+    public void addCzesc(){
+
+    }
+
+    public void modifyCzesc(){
+
     }
 }

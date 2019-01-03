@@ -30,7 +30,7 @@ public class ConnectionManager {
 
     public static void closeAndCommit() {
         try {
-            connection.commit();
+//            connection.commit();  //TODO zdecydować czy auto-commit powinien być włączony
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
