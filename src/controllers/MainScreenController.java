@@ -1,6 +1,5 @@
 package controllers;
 
-import infrastructure.ConnectionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,25 +39,25 @@ public class MainScreenController {
     }
 
     public void modifyKlientIndywidualny() throws IOException, SQLException {
-        openKlientEditModal(false, klienciIndywidualniList.getSelectionModel().getSelectedItem(), true);
+        if (klienciIndywidualniList.getSelectionModel().getSelectedItem() != null)
+            openKlientEditModal(false, klienciIndywidualniList.getSelectionModel().getSelectedItem(), true);
     }
 
     public void modifyFirma() throws IOException, SQLException {
-        openKlientEditModal(false, firmyList.getSelectionModel().getSelectedItem(), false);
+        if (firmyList.getSelectionModel().getSelectedItem() != null)
+            openKlientEditModal(false, firmyList.getSelectionModel().getSelectedItem(), false);
     }
 
     public void openKlientEditModal(boolean add, String selectedString, boolean indywidualny) throws IOException, SQLException {
-        if(selectedString != null) {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/klientEditView.fxml"));
-            stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Modyfikacja klienta");
-            String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
-            loader.<KlientEditViewController>getController().setContext(add, id, indywidualny);
-            stage.showAndWait();
-            showKlienci();
-        }
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/klientEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja klienta");
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<KlientEditViewController>getController().setContext(add, id, indywidualny);
+        stage.showAndWait();
+        showKlienci();
     }
 
     public void showSamochody() throws SQLException {
@@ -79,6 +78,28 @@ public class MainScreenController {
     }
 
     public void addSamochod() throws IOException, SQLException {
-//        openKlientEditModal(true, null, false);
+        openSamochodEditModal(true, null, false);
+    }
+
+    public void modifySamochod() throws IOException, SQLException {
+        if (samochodyList.getSelectionModel().getSelectedItem() != null)
+            openSamochodEditModal(false, samochodyList.getSelectionModel().getSelectedItem(), false);
+    }
+
+    public void modifySamochodZastepczy() throws IOException, SQLException {
+        if (samochodyZastepczeList.getSelectionModel().getSelectedItem() != null)
+            openSamochodEditModal(false, samochodyZastepczeList.getSelectionModel().getSelectedItem(), true);
+    }
+
+    public void openSamochodEditModal(boolean add, String selectedString, boolean zastepczy) throws IOException, SQLException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/samochodEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja klienta");
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<SamochodEditViewController>getController().setContext(add, id, zastepczy);
+        stage.showAndWait();
+        showSamochody();
     }
 }

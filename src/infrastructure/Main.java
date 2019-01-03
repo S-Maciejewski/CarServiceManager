@@ -20,7 +20,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         ConnectionManager.connect("SEBA", "seba");
         launch(args);
-//        ConnectionManager.closeAndCommit();   //TODO zdecydować czy auto-commmit to dobry pomysł
+        ConnectionManager.closeAndCommit();
     }
 
 }

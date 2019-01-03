@@ -11,16 +11,17 @@ public class SamochodService {
         model = model != null ? model : "null";
         pojemosc = pojemosc != null ? pojemosc : "null";
         rokProdukcji = rokProdukcji != null ? rokProdukcji : "null";
-        if (czyZastepczy)
+        if (!czyZastepczy)
             ConnectionManager.executeProcedure("{call WSTAW_SAMOCHOD('" + numRej + "', '" + vin + "', '" + marka + "', '" + model + "', '" + pojemosc + "', '" + rokProdukcji + "')}");
         else
-            ConnectionManager.executeProcedure("{call WSTAW_SAMOCHOD('" + numRej + "', '" + vin + "', '" + marka + "', '" + model + "', '" + pojemosc + "', '" + rokProdukcji + "' + 'ZASTEPCZY')}");
+            ConnectionManager.executeProcedure("{call WSTAW_SAMOCHOD('" + numRej + "', '" + vin + "', '" + marka + "', '" + model + "', '" + pojemosc + "', '" + rokProdukcji + "', 'ZASTEPCZY')}");
     }
 
     public static ResultSet getSamochody(boolean czyZastepczy) {
         return czyZastepczy ?
                 ConnectionManager.getStatementResultSet("select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC, ROK_PRODUKCJI, CZY_WYPOZYCZONY from SAMOCHOD_ZASTEPCZY left outer join SAMOCHOD on ID_SAMOCHODU_ZASTEPCZEGO = ID_SAMOCHODU") :
-                ConnectionManager.getStatementResultSet("select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC, ROK_PRODUKCJI from SAMOCHOD");
+                ConnectionManager.getStatementResultSet("select ID_SAMOCHODU, NUMER_REJESTRACYJNY, VIN, MARKA, MODEL, POJEMNOSC, ROK_PRODUKCJI from SAMOCHOD left join SAMOCHOD_ZASTEPCZY on ID_SAMOCHODU_ZASTEPCZEGO = ID_SAMOCHODU where ID_SAMOCHODU_ZASTEPCZEGO is null");
+
     }
 
     public static ResultSet getSamochod(boolean czyZastepczy, String ID) {
@@ -37,8 +38,16 @@ public class SamochodService {
 
     public static void updateSamochod(String ID, boolean czyZastepczy, String numRej, String vin, String marka, String model, String pojemosc, String rokProdukcji, boolean czyWypozyczony) {
         String wypozyczony = czyWypozyczony ? "Tak" : "Nie";
-        ConnectionManager.executeStatement("update SAMOCHOD set NUMER_REJESTRACYJNY = '" + numRej + "', VIN = '" + vin + "', MARKA = '" + marka + "', MODEL = '" + model + "', POJEMNOSC = '" + pojemosc +
-                "', ROK_PRODUKCJI = '" + rokProdukcji + "' where ID_SAMOCHODU = '" + ID + "'");
+        if(pojemosc != null)
+            pojemosc = pojemosc.equals("") ? "null" : pojemosc;
+        else
+            pojemosc = "null";
+        if(rokProdukcji != null)
+            rokProdukcji = rokProdukcji.equals("") ? "null" : rokProdukcji;
+        else
+            rokProdukcji = "null";
+        ConnectionManager.executeStatement("update SAMOCHOD set NUMER_REJESTRACYJNY = '" + numRej + "', VIN = '" + vin + "', MARKA = '" + marka + "', MODEL = '" + model + "', POJEMNOSC = " + pojemosc +
+                ", ROK_PRODUKCJI = " + rokProdukcji + " where ID_SAMOCHODU = '" + ID + "'");
         if (czyZastepczy) {
             ConnectionManager.executeStatement("update SAMOCHOD_ZASTEPCZY set CZY_WYPOZYCZONY = '" + wypozyczony + "' where ID_SAMOCHODU_ZASTEPCZEGO = '" + ID + "'");
         }
