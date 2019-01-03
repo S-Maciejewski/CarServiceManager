@@ -17,7 +17,7 @@
               <children>
                 <Button layoutX="1103.0" layoutY="727.0" mnemonicParsing="false" onAction="#showKlienci" text="Odśwież">
                   <font>
-                    <Font size="14.0" />
+                    <Font size="14.0" fx:id="x2" />
                   </font>
                 </Button>
                 <ListView id="clientList" fx:id="klienciIndywidualniList" layoutX="14.0" layoutY="51.0" onMouseClicked="#modifyKlientIndywidualny" prefHeight="300.0" prefWidth="1172.0" />
@@ -30,7 +30,7 @@
                 <Label font="$x1" layoutX="14.0" layoutY="368.0" text="Klienci biznesowi" />
                 <Button layoutX="1046.0" mnemonicParsing="false" onAction="#addKlient" prefHeight="30.0" prefWidth="140.0" text="Dodaj klienta" AnchorPane.topAnchor="366.0">
                   <font>
-                    <Font size="16.0" />
+                    <Font size="16.0" fx:id="x3" />
                   </font>
                 </Button>
                 <Label layoutX="14.0" layoutY="35.0" text="id, imię, nazwisko, adres" />
@@ -39,9 +39,20 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab text="Samochody">
+        <Tab closable="false" onSelectionChanged="#showSamochody" text="Samochody">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="764.0" prefWidth="1200.0">
+              <children>
+                <Button font="$x2" layoutX="1103.0" layoutY="727.0" mnemonicParsing="false" onAction="#showSamochody" text="Odśwież" />
+                <ListView id="clientList" fx:id="samochodyList" layoutX="14.0" layoutY="51.0" onMouseClicked="#modifyKlientIndywidualny" prefHeight="300.0" prefWidth="1172.0" />
+                <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Samochody" />
+                <ListView id="clientList" fx:id="samochodyZastepczeList" layoutX="14.0" layoutY="413.0" onMouseClicked="#modifyFirma" prefHeight="300.0" prefWidth="1172.0" />
+                <Label font="$x1" layoutX="14.0" layoutY="368.0" text="Samochody zastępcze" />
+                <Button font="$x3" layoutX="1006.0" mnemonicParsing="false" onAction="#addSamochod" prefHeight="30.0" prefWidth="180.0" text="Dodaj samochód" AnchorPane.topAnchor="366.0" />
+                <Label layoutX="14.0" layoutY="35.0" text="id, numer rejestracyjny, vin, marka, model, pojemność, rok produkcji" />
+                <Label layoutX="14.0" layoutY="394.0" text="id, numer rejestracyjny, vin, marka, model, pojemność, rok produkcji, czy wypożyczony" />
+              </children>
+            </AnchorPane>
           </content>
         </Tab>
       </tabs>
