@@ -9,7 +9,9 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.KlientService;
+import services.PracownicyService;
 import services.SamochodService;
+import services.SerwisService;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -17,7 +19,7 @@ import java.sql.SQLException;
 
 public class MainScreenController {
     @FXML
-    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList;
+    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList;
 
     public void showKlienci() throws SQLException {
         ObservableList<String> klienciIndywidualni = FXCollections.observableArrayList();
@@ -108,16 +110,36 @@ public class MainScreenController {
         showSamochody();
     }
 
-    public void showSerwisy(){
-
+    public void showSerwisy() throws SQLException{
+        ObservableList<String> serwisy = FXCollections.observableArrayList();
+        ResultSet resultSet = SerwisService.getSerwisy();
+        while (resultSet.next()) {
+            serwisy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
+        }
+        serwisyList.setItems(serwisy);
+        ObservableList<String> pracownicy = FXCollections.observableArrayList();
+        resultSet = PracownicyService.getPracownicy();
+        while (resultSet.next()) {
+            pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+        }
+        pracownicyList.setItems(pracownicy);
     }
 
     public void addSerwis(){
 
     }
 
-    public void selectSerwis(){
-
+    public void selectSerwis() throws SQLException {
+        String selectedString = serwisyList.getSelectionModel().getSelectedItem();
+        if(selectedString != null){
+            String id = selectedString.substring(0, selectedString.indexOf(','));
+            ObservableList<String> pracownicy = FXCollections.observableArrayList();
+            ResultSet resultSet = PracownicyService.getPracownicySerwisu(id);
+            while (resultSet.next()) {
+                pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+            }
+            pracownicyList.setItems(pracownicy);
+        }
     }
 
     public void modifySerwis(){
