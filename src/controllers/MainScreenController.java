@@ -138,8 +138,25 @@ public class MainScreenController {
         czesciList.getSelectionModel().clearSelection();
     }
 
-    public void addSerwis() {
+    public void addSerwis() throws IOException, SQLException {
+        openSerwisEditModal(null);
+    }
 
+    public void modifySerwis() throws IOException, SQLException {
+        if (serwisyList.getSelectionModel().getSelectedItem() != null)
+            openSerwisEditModal(serwisyList.getSelectionModel().getSelectedItem());
+    }
+
+    private void openSerwisEditModal(String selectedString) throws IOException, SQLException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/serwisEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja pracownika");
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<SerwisEditViewController>getController().setContext(id);
+        stage.showAndWait();
+        showSerwisy();
     }
 
     public void selectSerwis() throws SQLException {
@@ -165,10 +182,6 @@ public class MainScreenController {
             }
             czesciList.setItems(czesci);
         }
-    }
-
-    public void modifySerwis() {
-
     }
 
     public void addPracownik() throws IOException, SQLException {

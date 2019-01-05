@@ -18,7 +18,7 @@ public class SerwisService {
         return ConnectionManager.getStatementResultSet("select ID_SERWISU, NAZWA, ADRES from SERWIS where ID_SERWISU = '" + ID + "'");
     }
 
-    public static void deleteSerwis(String ID) {
+    public static void deleteSerwis(String ID) {    //TODO on delete cascade??
         ConnectionManager.executeStatement("delete from SERWIS where ID_SERWISU = '" + ID + "'");
     }
 

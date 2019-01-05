@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.SerwisEditViewController">
+  <children>
+    <Label layoutX="226.0" layoutY="21.0" text="Edycja serwisu">
+      <font>
+        <Font size="20.0" />
+      </font>
+    </Label>
+    <TextField id="idField" fx:id="id" editable="false" layoutX="137.0" layoutY="82.0" prefWidth="398.0" />
+    <TextField id="imieNazwa" fx:id="nazwa" editable="true" layoutX="137.0" layoutY="115.0" prefWidth="398.0" />
+    <TextField id="nazwiskoNip" fx:id="adres" editable="true" layoutX="137.0" layoutY="149.0" prefWidth="398.0" />
+    <Label layoutX="48.0" layoutY="118.0" text="Nazwa">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="51.0" layoutY="150.0" text="Adres" />
+    <Label font="$x1" layoutX="64.0" layoutY="85.0" text="ID" />
+    <Button fx:id="confirm" layoutX="376.0" layoutY="200.0" mnemonicParsing="false" onAction="#confirmChanges" text="Zatwierdź">
+      <font>
+        <Font size="16.0" fx:id="x2" />
+      </font>
+    </Button>
+    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteRecord" text="Usuń serwis" visible="true" />
+    <Label fx:id="errorMsg" font="$x2" layoutX="140.0" layoutY="230.0" text="Błąd - dane niezgodne z ograniczeniami" textFill="#ff3333" visible="false" />
+  </children>
+</AnchorPane>
