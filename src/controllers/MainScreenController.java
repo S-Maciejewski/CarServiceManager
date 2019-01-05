@@ -8,10 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import services.KlientService;
-import services.PracownicyService;
-import services.SamochodService;
-import services.SerwisService;
+import services.*;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -118,11 +115,27 @@ public class MainScreenController {
         }
         serwisyList.setItems(serwisy);
         ObservableList<String> pracownicy = FXCollections.observableArrayList();
-        resultSet = PracownicyService.getPracownicy();
+        resultSet = PracownikService.getPracownicy();
         while (resultSet.next()) {
             pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
         }
         pracownicyList.setItems(pracownicy);
+        ObservableList<String> stanyCzesci = FXCollections.observableArrayList();
+        resultSet = StanCzesciService.getStanyCzesci();
+        while (resultSet.next()) {
+            stanyCzesci.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+        }
+        stanyList.setItems(stanyCzesci);
+        ObservableList<String> czesci = FXCollections.observableArrayList();
+        resultSet = CzescService.getCzesci();
+        while (resultSet.next()) {
+            czesci.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
+        }
+        czesciList.setItems(czesci);
+        serwisyList.getSelectionModel().clearSelection();
+        pracownicyList.getSelectionModel().clearSelection();
+        stanyList.getSelectionModel().clearSelection();
+        czesciList.getSelectionModel().clearSelection();
     }
 
     public void addSerwis(){
@@ -134,11 +147,23 @@ public class MainScreenController {
         if(selectedString != null){
             String id = selectedString.substring(0, selectedString.indexOf(','));
             ObservableList<String> pracownicy = FXCollections.observableArrayList();
-            ResultSet resultSet = PracownicyService.getPracownicySerwisu(id);
+            ResultSet resultSet = PracownikService.getPracownicySerwisu(id);
             while (resultSet.next()) {
                 pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
             }
             pracownicyList.setItems(pracownicy);
+            ObservableList<String> stanyCzesci = FXCollections.observableArrayList();
+            resultSet = StanCzesciService.getStanyCzesciSerwisu(id);
+            while (resultSet.next()) {
+                stanyCzesci.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+            }
+            stanyList.setItems(stanyCzesci);
+            ObservableList<String> czesci = FXCollections.observableArrayList();
+            resultSet = CzescService.getCzesciSerwisu(id);
+            while (resultSet.next()) {
+                czesci.add(resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+            }
+            czesciList.setItems(czesci);
         }
     }
 

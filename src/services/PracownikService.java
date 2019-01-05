@@ -4,7 +4,7 @@ import infrastructure.ConnectionManager;
 
 import java.sql.ResultSet;
 
-public class PracownicyService {
+public class PracownikService {
 
     public static void addPracownik(String imie, String nazwisko, String idSerwisu) {
         ConnectionManager.executeProcedure("{call WSTAW_PRACOWNIKA('" + imie + "', " + nazwisko + "', " + idSerwisu + "')}");
