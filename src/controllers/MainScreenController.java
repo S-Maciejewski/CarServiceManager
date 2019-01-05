@@ -36,27 +36,27 @@ public class MainScreenController {
     }
 
     public void addKlient() throws IOException, SQLException {
-        openKlientEditModal(true, null, false);
+        openKlientEditModal(null, false);
     }
 
     public void modifyKlientIndywidualny() throws IOException, SQLException {
         if (klienciIndywidualniList.getSelectionModel().getSelectedItem() != null)
-            openKlientEditModal(false, klienciIndywidualniList.getSelectionModel().getSelectedItem(), true);
+            openKlientEditModal(klienciIndywidualniList.getSelectionModel().getSelectedItem(), true);
     }
 
     public void modifyFirma() throws IOException, SQLException {
         if (firmyList.getSelectionModel().getSelectedItem() != null)
-            openKlientEditModal(false, firmyList.getSelectionModel().getSelectedItem(), false);
+            openKlientEditModal(firmyList.getSelectionModel().getSelectedItem(), false);
     }
 
-    public void openKlientEditModal(boolean add, String selectedString, boolean indywidualny) throws IOException, SQLException {
+    private void openKlientEditModal(String selectedString, boolean indywidualny) throws IOException, SQLException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/klientEditView.fxml"));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Modyfikacja klienta");
         String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
-        loader.<KlientEditViewController>getController().setContext(add, id, indywidualny);
+        loader.<KlientEditViewController>getController().setContext(id, indywidualny);
         stage.showAndWait();
         showKlienci();
     }
@@ -82,32 +82,32 @@ public class MainScreenController {
     }
 
     public void addSamochod() throws IOException, SQLException {
-        openSamochodEditModal(true, null, false);
+        openSamochodEditModal(null, false);
     }
 
     public void modifySamochod() throws IOException, SQLException {
         if (samochodyList.getSelectionModel().getSelectedItem() != null)
-            openSamochodEditModal(false, samochodyList.getSelectionModel().getSelectedItem(), false);
+            openSamochodEditModal(samochodyList.getSelectionModel().getSelectedItem(), false);
     }
 
     public void modifySamochodZastepczy() throws IOException, SQLException {
         if (samochodyZastepczeList.getSelectionModel().getSelectedItem() != null)
-            openSamochodEditModal(false, samochodyZastepczeList.getSelectionModel().getSelectedItem(), true);
+            openSamochodEditModal(samochodyZastepczeList.getSelectionModel().getSelectedItem(), true);
     }
 
-    public void openSamochodEditModal(boolean add, String selectedString, boolean zastepczy) throws IOException, SQLException {
+    private void openSamochodEditModal(String selectedString, boolean zastepczy) throws IOException, SQLException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/samochodEditView.fxml"));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Modyfikacja klienta");
+        stage.setTitle("Modyfikacja samochodu");
         String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
-        loader.<SamochodEditViewController>getController().setContext(add, id, zastepczy);
+        loader.<SamochodEditViewController>getController().setContext(id, zastepczy);
         stage.showAndWait();
         showSamochody();
     }
 
-    public void showSerwisy() throws SQLException{
+    public void showSerwisy() throws SQLException {
         ObservableList<String> serwisy = FXCollections.observableArrayList();
         ResultSet resultSet = SerwisService.getSerwisy();
         while (resultSet.next()) {
@@ -138,13 +138,13 @@ public class MainScreenController {
         czesciList.getSelectionModel().clearSelection();
     }
 
-    public void addSerwis(){
+    public void addSerwis() {
 
     }
 
     public void selectSerwis() throws SQLException {
         String selectedString = serwisyList.getSelectionModel().getSelectedItem();
-        if(selectedString != null){
+        if (selectedString != null) {
             String id = selectedString.substring(0, selectedString.indexOf(','));
             ObservableList<String> pracownicy = FXCollections.observableArrayList();
             ResultSet resultSet = PracownikService.getPracownicySerwisu(id);
@@ -167,31 +167,44 @@ public class MainScreenController {
         }
     }
 
-    public void modifySerwis(){
+    public void modifySerwis() {
 
     }
 
-    public void addPracownik(){
+    public void addPracownik() throws IOException, SQLException {
+        openPracownikEditModal(null);
+    }
+
+    public void modifyPracownik() throws IOException, SQLException {
+        if (pracownicyList.getSelectionModel().getSelectedItem() != null)
+            openPracownikEditModal(pracownicyList.getSelectionModel().getSelectedItem());
+    }
+
+    private void openPracownikEditModal(String selectedString) throws IOException, SQLException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/pracownikEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja pracownika");
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<PracownikEditViewController>getController().setContext(id);
+        stage.showAndWait();
+        showSerwisy();
+    }
+
+    public void addStanCzesci() {
 
     }
 
-    public void modifyPracownik(){
+    public void modifyStanCzesci() {
 
     }
 
-    public void addStanCzesci(){
+    public void addCzesc() {
 
     }
 
-    public void modifyStanCzesci(){
-
-    }
-
-    public void addCzesc(){
-
-    }
-
-    public void modifyCzesc(){
+    public void modifyCzesc() {
 
     }
 }

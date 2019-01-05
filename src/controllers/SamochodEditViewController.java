@@ -22,11 +22,7 @@ public class SamochodEditViewController {
     @FXML
     private Label errorMsg;
 
-    public void setContext(boolean add, String ID, boolean zastepczy) throws SQLException {
-        if (add) {
-            delete.setVisible(false);
-            confirm.setOnAction((event) -> confirmNew());
-        }
+    public void setContext(String ID, boolean zastepczy) throws SQLException {
         if (ID != null) {
             czyZastepczy.setSelected(zastepczy);
             czyZastepczy.setDisable(true);
@@ -46,6 +42,9 @@ public class SamochodEditViewController {
                 else
                     czyWypozyczony.setSelected(false);
             }
+        } else {
+            delete.setVisible(false);
+            confirm.setOnAction((event) -> confirmNew());
         }
     }
 

@@ -22,11 +22,7 @@ public class KlientEditViewController {
     @FXML
     private Label errorMsg;
 
-    public void setContext(boolean add, String ID, boolean indywidualny) throws SQLException {
-        if (add) {
-            delete.setVisible(false);
-            confirm.setOnAction((event) -> confirmNew());
-        }
+    public void setContext(String ID, boolean indywidualny) throws SQLException {
         if (ID != null) {
             czyIndywidualny.setSelected(indywidualny);
             czyIndywidualny.setDisable(true);
@@ -36,6 +32,9 @@ public class KlientEditViewController {
             imieNazwa.setText(resultSet.getString(2));
             nazwiskoNIP.setText(resultSet.getString(3));
             adres.setText(resultSet.getString(4));
+        } else {
+            delete.setVisible(false);
+            confirm.setOnAction((event) -> confirmNew());
         }
     }
 
