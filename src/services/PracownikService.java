@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class PracownikService {
 
     public static void addPracownik(String imie, String nazwisko, String idSerwisu) {
-        ConnectionManager.executeProcedure("{call WSTAW_PRACOWNIKA('" + imie + "', " + nazwisko + "', " + idSerwisu + "')}");
+        ConnectionManager.executeProcedure("{call WSTAW_PRACOWNIKA('" + imie + "', '" + nazwisko + "', '" + idSerwisu + "')}");
     }
 
     public static ResultSet getPracownicy() {

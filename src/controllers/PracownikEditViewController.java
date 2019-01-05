@@ -41,20 +41,40 @@ public class PracownikEditViewController {
             delete.setVisible(false);
             confirm.setOnAction((event) -> confirmNew());
         }
-
-
     }
 
     public void confirmChanges() {
-
+        if (validate()) {
+            PracownikService.updatePracownik(id.getText(), imie.getText(), nazwisko.getText(),
+                    serwisDropdown.getSelectionModel().getSelectedItem().substring(0, serwisDropdown.getSelectionModel().getSelectedItem().indexOf(',')));
+            close();
+        } else {
+            errorMsg.setVisible(true);
+        }
     }
 
     public void confirmNew() {
-
+        if (validate()) {
+            PracownikService.addPracownik(imie.getText(), nazwisko.getText(),
+                    serwisDropdown.getSelectionModel().getSelectedItem().substring(0, serwisDropdown.getSelectionModel().getSelectedItem().indexOf(',')));
+            close();
+        } else {
+            errorMsg.setVisible(true);
+        }
     }
 
     public void deleteRecord() {
+        PracownikService.deletePracownik(id.getText());
+    }
 
+    private boolean validate() {
+        if (imie.getText().length() > 20 || imie.getText() == null)
+            return false;
+        if (nazwisko.getText().length() > 40 || nazwisko.getText() == null)
+            return false;
+        if (serwisDropdown.getSelectionModel().getSelectedItem() == null)
+            return false;
+        return true;
     }
 
     private void close() {
