@@ -3,8 +3,13 @@ package services;
 import infrastructure.ConnectionManager;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CzescService {
+
+    public static void addCzesc(String nazwa, String cena) {
+        ConnectionManager.executeProcedure("{call WSTAW_CZESC('" + nazwa + "', '" + cena + "')}");
+    }
 
     public static ResultSet getCzesci() {
         return ConnectionManager.getStatementResultSet("select ID_CZESCI, NAZWA, CENA_JEDN from CZESC");
@@ -18,8 +23,8 @@ public class CzescService {
         return ConnectionManager.getStatementResultSet("select ID_CZESCI, NAZWA, CENA_JEDN from CZESC where ID_CZESCI = '" + idCzesci + "'");
     }
 
-    public static void deleteCzesc(String idCzesci) {
-        ConnectionManager.executeStatement("delete from CZESC where ID_CZESCI = '" + idCzesci + "'");
+    public static void deleteCzesc(String idCzesci) throws SQLException {
+        ConnectionManager.executeStatementWithErrorCallback("delete from CZESC where ID_CZESCI = '" + idCzesci + "'");
     }
 
     public static void updateCzesc(String idCzesci, String nazwa, String cenaJedn) {

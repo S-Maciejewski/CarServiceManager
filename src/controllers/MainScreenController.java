@@ -152,7 +152,7 @@ public class MainScreenController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/serwisEditView.fxml"));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Modyfikacja pracownika");
+        stage.setTitle("Modyfikacja serwisu");
         String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
         loader.<SerwisEditViewController>getController().setContext(id);
         stage.showAndWait();
@@ -205,6 +205,27 @@ public class MainScreenController {
         showSerwisy();
     }
 
+    public void addCzesc() throws IOException, SQLException {
+        openCzescEditModal(null);
+    }
+
+    public void modifyCzesc() throws IOException, SQLException {
+        if (czesciList.getSelectionModel().getSelectedItem() != null)
+            openCzescEditModal(czesciList.getSelectionModel().getSelectedItem());
+    }
+
+    private void openCzescEditModal(String selectedString) throws IOException, SQLException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/czescEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja części");
+        String id = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        loader.<CzescEditViewController>getController().setContext(id);
+        stage.showAndWait();
+        showSerwisy();
+    }
+
     public void addStanCzesci() {
 
     }
@@ -213,11 +234,4 @@ public class MainScreenController {
 
     }
 
-    public void addCzesc() {
-
-    }
-
-    public void modifyCzesc() {
-
-    }
 }
