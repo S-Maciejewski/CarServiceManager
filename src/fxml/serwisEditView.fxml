@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.SerwisEditViewController">
+<AnchorPane prefHeight="280.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.SerwisEditViewController">
   <children>
     <Label layoutX="226.0" layoutY="21.0" text="Edycja serwisu">
       <font>
@@ -31,6 +31,6 @@
       </font>
     </Button>
     <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteRecord" text="Usuń serwis" visible="true" />
-    <Label fx:id="errorMsg" font="$x2" layoutX="140.0" layoutY="230.0" text="Błąd - dane niezgodne z ograniczeniami" textFill="#ff3333" visible="false" />
+    <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" font="$x2" layoutX="92.0" layoutY="235.0" prefWidth="429.0" text="Błąd - dane niezgodne z ograniczeniami" textAlignment="CENTER" textFill="#ff3333" underline="false" visible="false" wrapText="true" />
   </children>
 </AnchorPane>

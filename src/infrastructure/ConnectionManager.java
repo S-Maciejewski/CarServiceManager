@@ -66,4 +66,8 @@ public class ConnectionManager {
             System.out.println("Invalid SQL statement");
         }
     }
+
+    public static void executeStatementWithErrorCallback(String SqlStatement) throws SQLException {
+        statement.executeQuery(SqlStatement);
+    }
 }

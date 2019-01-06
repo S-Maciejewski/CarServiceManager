@@ -3,6 +3,7 @@ package services;
 import infrastructure.ConnectionManager;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SerwisService {
 
@@ -18,8 +19,8 @@ public class SerwisService {
         return ConnectionManager.getStatementResultSet("select ID_SERWISU, NAZWA, ADRES from SERWIS where ID_SERWISU = '" + ID + "'");
     }
 
-    public static void deleteSerwis(String ID) {    //TODO on delete cascade??
-        ConnectionManager.executeStatement("delete from SERWIS where ID_SERWISU = '" + ID + "'");
+    public static void deleteSerwis(String ID) throws SQLException {
+        ConnectionManager.executeStatementWithErrorCallback("delete from SERWIS where ID_SERWISU = '" + ID + "'");
     }
 
     public static void updateSerwis(String ID, String nazwa, String adres) {

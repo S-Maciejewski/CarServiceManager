@@ -62,15 +62,15 @@ public class KlientEditViewController {
     }
 
     private boolean validate() {
-        if (adres.getText().length() > 100)
+        if (adres.getText().length() > 100 || adres.getText() == null)
             return false;
         if (czyIndywidualny.isSelected()) {
-            if (imieNazwa.getText().length() > 20)
+            if (imieNazwa.getText().length() > 20 || imieNazwa.getText() == null)
                 return false;
-            if (nazwiskoNIP.getText().length() > 40)
+            if (nazwiskoNIP.getText().length() > 40 || nazwiskoNIP.getText() == null)
                 return false;
         } else {
-            if (imieNazwa.getText().length() > 100)
+            if (imieNazwa.getText().length() > 100 || imieNazwa.getText() == null)
                 return false;
             if (nazwiskoNIP.getText().length() != 10)
                 return false;

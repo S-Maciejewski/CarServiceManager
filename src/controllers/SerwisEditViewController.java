@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import services.PracownikService;
 import services.SerwisService;
 
 import java.sql.ResultSet;
@@ -34,7 +33,7 @@ public class SerwisEditViewController {
 
     public void confirmChanges() {
         if (validate()) {
-
+            SerwisService.updateSerwis(id.getText(), nazwa.getText(), adres.getText());
             close();
         } else {
             errorMsg.setVisible(true);
@@ -43,7 +42,7 @@ public class SerwisEditViewController {
 
     public void confirmNew() {
         if (validate()) {
-
+            SerwisService.addSerwis(nazwa.getText(), adres.getText());
             close();
         } else {
             errorMsg.setVisible(true);
@@ -51,10 +50,28 @@ public class SerwisEditViewController {
     }
 
     public void deleteRecord() {
-        SerwisService.deleteSerwis(id.getText());
+        try {
+            SerwisService.deleteSerwis(id.getText());
+            close();
+        } catch (SQLException e) {
+            System.out.println("Foreign key constraint exception");
+            errorMsg.setVisible(true);
+            errorMsg.setText("Błąd - nie można usunąć rekordu, gdyż posiada on powiązania w innych tablicach");
+        }
     }
 
     private boolean validate() {
+        errorMsg.setText("Błąd - dane niezgodne z ograniczeniami");
+        if (nazwa.getText() != null) {
+            if (nazwa.getText().length() > 100 || nazwa.getText().equals(""))
+                return false;
+        } else
+            return false;
+        if (adres.getText() != null) {
+            if (adres.getText().length() > 100 || adres.getText().equals(""))
+                return false;
+        } else
+            return false;
 
         return true;
     }

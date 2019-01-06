@@ -65,12 +65,20 @@ public class PracownikEditViewController {
 
     public void deleteRecord() {
         PracownikService.deletePracownik(id.getText());
+        close();
     }
 
     private boolean validate() {
-        if (imie.getText().length() > 20 || imie.getText() == null)
+        if (imie.getText() != null) {
+            if (imie.getText().length() > 20 || imie.getText().equals(""))
+                return false;
+        } else
             return false;
-        if (nazwisko.getText().length() > 40 || nazwisko.getText() == null)
+
+        if (nazwisko.getText() != null) {
+            if (nazwisko.getText().length() > 40 || nazwisko.getText().equals(""))
+                return false;
+        } else
             return false;
         if (serwisDropdown.getSelectionModel().getSelectedItem() == null)
             return false;
