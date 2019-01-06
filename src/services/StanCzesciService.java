@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 
 public class StanCzesciService {
 
-    public static void addStanCzesci() {
-//        ConnectionManager.executeStatement();
+    public static void addStanCzesci(String id_serwisu, String id_czesci, String ilosc) {
+        ConnectionManager.executeProcedure("{call DODAJ_CZESC(id_serwisu => '" + id_serwisu + "', id_czesci => '" + id_czesci + "', liczba => '" + ilosc + "')}");
     }
 
     public static ResultSet getStanyCzesci() {

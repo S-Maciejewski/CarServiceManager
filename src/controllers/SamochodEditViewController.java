@@ -85,21 +85,28 @@ public class SamochodEditViewController {
 
     private boolean validate() {
 
-        if (numRej.getText().length() > 8 || numRej.getText() == null)
+        if (numRej.getText() != null) {
+            if (numRej.getText().length() > 8 || numRej.getText().equals(""))
+                return false;
+        } else
             return false;
-        if (vin.getText().length() != 17)
+        if (vin.getText() != null) {
+            if (vin.getText().length() != 17)
+                return false;
+        } else
             return false;
-        if(model.getText() != null)
+
+        if (model.getText() != null)
             if (model.getText().length() > 100)
                 return false;
-        if(marka.getText() != null)
-            if(marka.getText().length() > 100)
+        if (marka.getText() != null)
+            if (marka.getText().length() > 100)
                 return false;
-        if(pojemnosc.getText() != null && !pojemnosc.getText().equals(""))
-            if(!pojemnosc.getText().matches("^\\d+(\\.\\d{1,2})?$"))
+        if (pojemnosc.getText() != null && !pojemnosc.getText().equals(""))
+            if (!pojemnosc.getText().matches("^\\d+(\\.\\d{1,2})?$"))
                 return false;
-        if(rokProdukcji.getText() != null && !rokProdukcji.getText().equals(""))
-            if(!rokProdukcji.getText().matches("\\d{4}"))
+        if (rokProdukcji.getText() != null && !rokProdukcji.getText().equals(""))
+            if (!rokProdukcji.getText().matches("\\d{4}"))
                 return false;
         return true;
     }

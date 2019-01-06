@@ -107,6 +107,7 @@ public class MainScreenController {
         showSamochody();
     }
 
+
     public void showSerwisy() throws SQLException {
         ObservableList<String> serwisy = FXCollections.observableArrayList();
         ResultSet resultSet = SerwisService.getSerwisy();
@@ -226,12 +227,26 @@ public class MainScreenController {
         showSerwisy();
     }
 
-    public void addStanCzesci() {
-
+    public void addStanCzesci() throws IOException, SQLException {
+        openStanCzesciEditModal(null);
     }
 
-    public void modifyStanCzesci() {
+    public void modifyStanCzesci() throws IOException, SQLException {
+        if (stanyList.getSelectionModel().getSelectedItem() != null)
+            openStanCzesciEditModal(stanyList.getSelectionModel().getSelectedItem());
+    }
 
+    private void openStanCzesciEditModal(String selectedString) throws IOException, SQLException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/stanCzesciEditView.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modyfikacja stanu części serwisu");
+        String idSerwisu = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+        String idCzesci = selectedString != null ? selectedString.substring(selectedString.indexOf(' '), selectedString.indexOf(',', selectedString.indexOf(',') + 1)) : null;
+        loader.<StanCzesciEditViewController>getController().setContext(idSerwisu, idCzesci);
+        stage.showAndWait();
+        showSerwisy();
     }
 
 }
