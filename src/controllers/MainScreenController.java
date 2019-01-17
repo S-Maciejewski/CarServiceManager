@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class MainScreenController {
     @FXML
-    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList;
+    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList, akcjeList, fakturyList;
 
     public void showKlienci() throws SQLException {
         ObservableList<String> klienciIndywidualni = FXCollections.observableArrayList();
@@ -247,6 +247,32 @@ public class MainScreenController {
         loader.<StanCzesciEditViewController>getController().setContext(idSerwisu, idCzesci);
         stage.showAndWait();
         showSerwisy();
+    }
+
+
+    public void showAkcje() throws SQLException {
+//        ObservableList<String> akcje = FXCollections.observableArrayList();
+//        ResultSet resultSet = SerwisService.getSerwisy();
+//        while (resultSet.next()) {
+//            serwisy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
+//        }
+//        serwisyList.setItems(serwisy);
+    }
+
+    public void selectAkcja() {
+
+    }
+
+    public void addAkcja() {
+
+    }
+
+    public void modifyAkcja() {
+
+    }
+
+    public void modifyFaktura() {
+
     }
 
 }

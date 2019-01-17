@@ -66,16 +66,32 @@
                 <Label font="$x1" layoutX="14.0" layoutY="368.0" text="Pracownicy" />
                 <Button font="$x3" layoutX="402.0" mnemonicParsing="false" onAction="#addPracownik" prefHeight="30.0" prefWidth="172.0" text="Dodaj pracownika" AnchorPane.topAnchor="367.0" />
                 <Label layoutX="14.0" layoutY="35.0" text="id, nazwa, adres" />
-                <Label layoutX="14.0" layoutY="394.0" text="id, id_serwisu, imię, nazwisko" />
+                <Label layoutX="14.0" layoutY="394.0" text="id, id serwisu, imię, nazwisko" />
                 <Button font="$x3" layoutX="434.0" layoutY="14.0" mnemonicParsing="false" onAction="#addSerwis" prefHeight="30.0" prefWidth="140.0" text="Dodaj serwis" />
                 <ListView id="clientList" fx:id="stanyList" layoutX="626.0" layoutY="51.0" onMouseClicked="#modifyStanCzesci" prefHeight="300.0" prefWidth="560.0" />
                 <ListView id="clientList" fx:id="czesciList" layoutX="626.0" layoutY="413.0" onMouseClicked="#modifyCzesc" prefHeight="300.0" prefWidth="560.0" />
                 <Button font="$x3" layoutX="976.0" layoutY="14.0" mnemonicParsing="false" onAction="#addStanCzesci" prefHeight="30.0" prefWidth="210.0" text="Dodaj części na stanie" />
                 <Button font="$x3" layoutX="1046.0" layoutY="367.0" mnemonicParsing="false" onAction="#addCzesc" prefHeight="30.0" prefWidth="140.0" text="Dodaj część" />
                 <Label font="$x1" layoutX="626.0" layoutY="14.0" text="Stany części" />
-                <Label layoutX="626.0" layoutY="35.0" text="id_serwisu, id_części, ilość, nazwa" />
+                <Label layoutX="626.0" layoutY="35.0" text="id serwisu, id części, ilość, nazwa" />
                 <Label font="$x1" layoutX="626.0" layoutY="368.0" text="Części" />
                 <Label layoutX="626.0" layoutY="394.0" text="id, nazwa, cena jednostkowa" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab closable="false" onSelectionChanged="#showAkcje" text="Akcje serwisowe">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="764.0" prefWidth="1200.0">
+              <children>
+                <Button font="$x2" layoutX="1103.0" layoutY="727.0" mnemonicParsing="false" onAction="#showAkcje" text="Odśwież" />
+                <ListView id="clientList" fx:id="akcjeList" layoutX="14.0" layoutY="51.0" onContextMenuRequested="#modifyAkcja" onMouseClicked="#selectAkcja" prefHeight="300.0" prefWidth="1172.0" />
+                <Label font="$x1" layoutX="14.0" layoutY="14.0" text="Akcje serwisowe" />
+                <ListView id="clientList" fx:id="fakturyList" layoutX="14.0" layoutY="413.0" onMouseClicked="#modifyFaktura" prefHeight="300.0" prefWidth="1172.0" />
+                <Label font="$x1" layoutX="14.0" layoutY="368.0" text="Faktury" />
+                <Button font="$x3" layoutX="972.0" mnemonicParsing="false" onAction="#addAkcja" prefHeight="30.0" prefWidth="214.0" text="Dodaj akcję serwisową" AnchorPane.topAnchor="366.0" />
+                <Label layoutX="14.0" layoutY="35.0" text="id, samochód, klient, serwis, data rozpoczęcia" />
+                <Label layoutX="14.0" layoutY="394.0" text="id, kwota, termin płatności" />
               </children>
             </AnchorPane>
           </content>

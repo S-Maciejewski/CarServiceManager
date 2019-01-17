@@ -30,5 +30,4 @@ public class CzescService {
     public static void updateCzesc(String idCzesci, String nazwa, String cenaJedn) {
         ConnectionManager.executeStatement("update CZESC set NAZWA = '" + nazwa + "', CENA_JEDN = '" + cenaJedn + "' where ID_CZESCI = '" + idCzesci + "'");
     }
-
 }
