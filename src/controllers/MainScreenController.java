@@ -5,7 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.*;
@@ -17,6 +20,16 @@ import java.sql.SQLException;
 public class MainScreenController {
     @FXML
     private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList, akcjeList, fakturyList;
+
+    @FXML
+    private TextField akcjaId, opis, kwota, dataRozpoczecia, dataZakonczenia;
+
+    @FXML
+    private ChoiceBox<String> klientDropdown, samochodDropdown, pracownikDropdown, serwisDropdown, samochodZastepczyDropdown;
+
+    @FXML
+    private Button confirmButton, deleteButton;
+
 
     public void showKlienci() throws SQLException {
         ObservableList<String> klienciIndywidualni = FXCollections.observableArrayList();
@@ -251,16 +264,111 @@ public class MainScreenController {
 
 
     public void showAkcje() throws SQLException {
-//        ObservableList<String> akcje = FXCollections.observableArrayList();
-//        ResultSet resultSet = SerwisService.getSerwisy();
-//        while (resultSet.next()) {
-//            serwisy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
-//        }
-//        serwisyList.setItems(serwisy);
+        deleteButton.setVisible(false);
+        confirmButton.setText("Dodaj akcję serwisową");
+        confirmButton.setOnAction((event) -> addAkcja());
+        opis.clear();
+        akcjaId.clear();
+        kwota.clear();
+        dataZakonczenia.clear();
+        dataRozpoczecia.clear();
+
+        ObservableList<String> akcje = FXCollections.observableArrayList();
+        ObservableList<String> klienci = FXCollections.observableArrayList();
+        ObservableList<String> samochody = FXCollections.observableArrayList();
+        ObservableList<String> pracownicy = FXCollections.observableArrayList();
+        ObservableList<String> serwisy = FXCollections.observableArrayList();
+        ObservableList<String> samochodyZastepcze = FXCollections.observableArrayList();
+        ObservableList<String> faktury = FXCollections.observableArrayList();
+
+        ResultSet resultSet = KlientService.getKlienci(true);
+        while (resultSet.next()) {
+            klienci.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+        }
+        resultSet = KlientService.getKlienci(false);
+        while (resultSet.next()) {
+            klienci.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+        }
+        klientDropdown.setItems(klienci);
+
+        resultSet = SamochodService.getSamochody(false);
+        while (resultSet.next()) {
+            samochody.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(4) + ", " + resultSet.getString(5));
+        }
+        samochodDropdown.setItems(samochody);
+
+        resultSet = PracownikService.getPracownicy();
+        while (resultSet.next()) {
+            pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+        }
+        pracownikDropdown.setItems(pracownicy);
+
+        resultSet = SerwisService.getSerwisy();
+        while (resultSet.next()) {
+            serwisy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
+        }
+        serwisDropdown.setItems(serwisy);
+
+        resultSet = SamochodService.getSamochody(true);
+        while (resultSet.next()) {
+            if (!resultSet.getString(8).equals("Nie"))
+                samochodyZastepcze.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(4) + ", " + resultSet.getString(5));
+        }
+        samochodZastepczyDropdown.setItems(samochodyZastepcze);
+
+
+        resultSet = AkcjaSerwisowaService.getAkcje();
+        while (resultSet.next()) {
+            akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")) + ", " + resultSet.getString(9).substring(0, resultSet.getString(9).indexOf(" ")) + ", " + resultSet.getString(4));
+        }
+        akcjeList.setItems(akcje);
+
+        resultSet = FakturaService.getFaktury();
+        while (resultSet.next()) {
+            faktury.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
+        }
+        fakturyList.setItems(faktury);
+
+        akcjeList.getSelectionModel().clearSelection();
+        fakturyList.getSelectionModel().clearSelection();
     }
 
-    public void selectAkcja() {
+    public void selectAkcja() throws SQLException {
+        deleteButton.setVisible(true);
+        confirmButton.setText("Zatwierdź modyfikacje");
+        confirmButton.setOnAction((event) -> modifyAkcja());
 
+        if (akcjeList.getSelectionModel().getSelectedItem() != null) {
+            String selectedID = akcjeList.getSelectionModel().getSelectedItem().substring(0, akcjeList.getSelectionModel().getSelectedItem().indexOf(','));
+            ResultSet resultSet = AkcjaSerwisowaService.getAkcja(selectedID);
+            resultSet.next();
+            akcjaId.setText(resultSet.getString(1));
+            opis.setText(resultSet.getString(4));
+            dataRozpoczecia.setText(resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")));
+            dataZakonczenia.setText(resultSet.getString(9).substring(0, resultSet.getString(9).indexOf(" ")));
+            for (String pracownik : pracownikDropdown.getItems())
+                if (pracownik.contains(resultSet.getString(6)))
+                    pracownikDropdown.getSelectionModel().select(pracownik);
+
+            for (String klient : klientDropdown.getItems())
+                if (klient.substring(0, klient.indexOf(',')).contains(resultSet.getString(3)))
+                    klientDropdown.getSelectionModel().select(klient);
+
+            for (String samochod : samochodDropdown.getItems())
+                if (samochod.substring(0, samochod.indexOf(',')).contains(resultSet.getString(3)))
+                    samochodDropdown.getSelectionModel().select(samochod);
+
+            //Mozliwosc odebrania samochodu zastepczego
+            ResultSet rs = SamochodService.getSamochod(true, resultSet.getString(2));
+            if (rs.next()) {  //TODO Po update zaktualizowac status samochodu
+                ObservableList<String> samochodyZastepcze = FXCollections.observableArrayList();
+                samochodyZastepcze = samochodZastepczyDropdown.getItems();
+                samochodyZastepcze.add("-");
+                samochodyZastepcze.add(rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(4) + ", " + rs.getString(5));
+                samochodZastepczyDropdown.setItems(samochodyZastepcze);
+            }
+
+        }
     }
 
     public void addAkcja() {
@@ -269,6 +377,9 @@ public class MainScreenController {
 
     public void modifyAkcja() {
 
+    }
+
+    public void deleteAkcja() {
     }
 
     public void modifyFaktura() {

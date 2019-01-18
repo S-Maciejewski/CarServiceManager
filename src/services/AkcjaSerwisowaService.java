@@ -3,7 +3,6 @@ package services;
 import infrastructure.ConnectionManager;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class AkcjaSerwisowaService {
 
@@ -24,6 +23,10 @@ public class AkcjaSerwisowaService {
 
     public static ResultSet getAkcja(String ID) {
         return ConnectionManager.getStatementResultSet("select ID_AKCJI, ID_SAMOCHODU, ID_KLIENTA, OPIS, ID_FAKTURY, ID_PRACOWNIKA, ID_SAMOCHODU_ZASTEPCZEGO, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA from AKCJA_SERWISOWA where ID_AKCJI = '" + ID + "'");
+    }
+
+    public static ResultSet getAkcjeDetails(){
+        return ConnectionManager.getStatementResultSet("select ID_AKCJI, ");
     }
 
     public static void deleteAkcja(String ID) {
