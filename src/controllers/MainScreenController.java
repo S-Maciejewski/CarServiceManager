@@ -25,7 +25,7 @@ public class MainScreenController {
     private TextField akcjaId, opis, kwota, dataRozpoczecia, dataZakonczenia;
 
     @FXML
-    private ChoiceBox<String> klientDropdown, samochodDropdown, pracownikDropdown, serwisDropdown, samochodZastepczyDropdown;
+    private ChoiceBox<String> klientDropdown, samochodDropdown, pracownikDropdown, samochodZastepczyDropdown;
 
     @FXML
     private Button confirmButton, deleteButton;
@@ -277,7 +277,6 @@ public class MainScreenController {
         ObservableList<String> klienci = FXCollections.observableArrayList();
         ObservableList<String> samochody = FXCollections.observableArrayList();
         ObservableList<String> pracownicy = FXCollections.observableArrayList();
-        ObservableList<String> serwisy = FXCollections.observableArrayList();
         ObservableList<String> samochodyZastepcze = FXCollections.observableArrayList();
         ObservableList<String> faktury = FXCollections.observableArrayList();
 
@@ -297,17 +296,11 @@ public class MainScreenController {
         }
         samochodDropdown.setItems(samochody);
 
-        resultSet = PracownikService.getPracownicy();
+        resultSet = PracownikService.getPracownicyJoinSerwisy();
         while (resultSet.next()) {
-            pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
+            pracownicy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4));
         }
         pracownikDropdown.setItems(pracownicy);
-
-        resultSet = SerwisService.getSerwisy();
-        while (resultSet.next()) {
-            serwisy.add(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3));
-        }
-        serwisDropdown.setItems(serwisy);
 
         resultSet = SamochodService.getSamochody(true);
         while (resultSet.next()) {
@@ -341,14 +334,17 @@ public class MainScreenController {
         if (akcjeList.getSelectionModel().getSelectedItem() != null) {
             String selectedID = akcjeList.getSelectionModel().getSelectedItem().substring(0, akcjeList.getSelectionModel().getSelectedItem().indexOf(','));
             ResultSet resultSet = AkcjaSerwisowaService.getAkcja(selectedID);
+            ResultSet rs;
             resultSet.next();
             akcjaId.setText(resultSet.getString(1));
             opis.setText(resultSet.getString(4));
             dataRozpoczecia.setText(resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")));
             dataZakonczenia.setText(resultSet.getString(9).substring(0, resultSet.getString(9).indexOf(" ")));
+
             for (String pracownik : pracownikDropdown.getItems())
-                if (pracownik.contains(resultSet.getString(6)))
+                if (pracownik.contains(resultSet.getString(6))) {
                     pracownikDropdown.getSelectionModel().select(pracownik);
+                }
 
             for (String klient : klientDropdown.getItems())
                 if (klient.substring(0, klient.indexOf(',')).contains(resultSet.getString(3)))
@@ -359,7 +355,7 @@ public class MainScreenController {
                     samochodDropdown.getSelectionModel().select(samochod);
 
             //Mozliwosc odebrania samochodu zastepczego
-            ResultSet rs = SamochodService.getSamochod(true, resultSet.getString(2));
+            rs = SamochodService.getSamochod(true, resultSet.getString(2));
             if (rs.next()) {  //TODO Po update zaktualizowac status samochodu
                 ObservableList<String> samochodyZastepcze = FXCollections.observableArrayList();
                 samochodyZastepcze = samochodZastepczyDropdown.getItems();

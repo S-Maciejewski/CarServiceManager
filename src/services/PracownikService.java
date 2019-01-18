@@ -14,6 +14,10 @@ public class PracownikService {
         return ConnectionManager.getStatementResultSet("select ID_PRACOWNIKA, ID_SERWISU, IMIE, NAZWISKO from PRACOWNIK");
     }
 
+    public static ResultSet getPracownicyJoinSerwisy() {
+        return ConnectionManager.getStatementResultSet("select ID_PRACOWNIKA, IMIE, NAZWISKO, NAZWA from PRACOWNIK natural join SERWIS");
+    }
+
     public static ResultSet getPracownicySerwisu(String idSerwisu) {
         return ConnectionManager.getStatementResultSet("select ID_PRACOWNIKA, ID_SERWISU, IMIE, NAZWISKO from PRACOWNIK where ID_SERWISU = '" + idSerwisu + "'");
     }
