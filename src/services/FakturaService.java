@@ -13,7 +13,7 @@ public class FakturaService {
     }
 
     public static ResultSet getFaktury() {
-        return ConnectionManager.getStatementResultSet("select ID_FAKTURY, KWOTA, TERMIN_PLATNOSCI from FAKTURA");
+        return ConnectionManager.getStatementResultSet("select ID_FAKTURY, KWOTA, to_char(TERMIN_PLATNOSCI,'YYYY-MM-DD') from FAKTURA");
     }
 
     public static ResultSet getFaktura(String ID) {

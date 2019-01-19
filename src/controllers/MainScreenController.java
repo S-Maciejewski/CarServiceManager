@@ -16,19 +16,23 @@ import java.sql.SQLException;
 
 public class MainScreenController {
     @FXML
-    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList, akcjeList, fakturyList;
+    private ListView<String> klienciIndywidualniList, firmyList, samochodyList, samochodyZastepczeList, serwisyList, pracownicyList, stanyList, czesciList, akcjeList, fakturyList, searchList;
 
     @FXML
-    private TextField akcjaId, opis, kwota, dataRozpoczecia, dataZakonczenia;
+    private TextField akcjaId, opis, kwota, dataRozpoczecia, dataZakonczenia, searchBox;
 
     @FXML
-    private ChoiceBox<String> klientDropdown, samochodDropdown, pracownikDropdown, samochodZastepczyDropdown;
+    private ChoiceBox<String> klientDropdown, samochodDropdown, pracownikDropdown, samochodZastepczyDropdown, searchDropdown;
 
     @FXML
-    private Button confirmButton, deleteButton;
+    private Button confirmButton, deleteButton, searchButton;
 
     @FXML
-    private Label errorMsg;
+    private Label errorMsg, searchCounter;
+
+    private ObservableList<String> searchOptions = FXCollections.observableArrayList("Klienci", "Samochody", "Serwisy", "Pracownicy", "Części", "Stany części", "Faktury", "Akcje serwisowe");
+
+    private ObservableList<String> searchResult = FXCollections.observableArrayList();
 
     private String selectedSamochodZastepczy;
 
@@ -487,17 +491,33 @@ public class MainScreenController {
 
     public void modifyFaktura() throws IOException, SQLException {
         String selectedString = fakturyList.getSelectionModel().getSelectedItem();
-        if(selectedString != null){
+        if (selectedString != null) {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/fakturaEditView.fxml"));
             stage.setScene(new Scene(loader.load()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Modyfikacja faktury");
 
-            String ID = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+            String ID = selectedString.substring(0, selectedString.indexOf(','));
             loader.<FakturaEditViewController>getController().setContext(ID);
             stage.showAndWait();
             showAkcje();
+        }
+    }
+
+    public void refreshSearch() {
+        searchResult = FXCollections.observableArrayList();
+        searchList.setItems(searchResult);
+        searchDropdown.setItems(searchOptions);
+        searchCounter.setText("0");
+        searchBox.clear();
+    }
+
+    public void search() throws SQLException {
+        if (searchBox.getText() != null && !searchBox.getText().equals("")) {
+            searchResult = SearchService.getResults(searchDropdown.getSelectionModel().getSelectedItem(), searchBox.getText());
+            searchList.setItems(searchResult);
+            searchCounter.setText("" + searchResult.size());
         }
     }
 

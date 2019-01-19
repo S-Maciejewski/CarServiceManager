@@ -115,7 +115,7 @@
                 </ChoiceBox>
                 <TextField id="idField" fx:id="akcjaId" disable="false" editable="false" layoutX="98.0" layoutY="303.0" prefWidth="281.0" />
                 <Label font="$x2" layoutX="50.0" layoutY="306.0" text="ID" />
-                <TextField id="idField" fx:id="opis" editable="true" layoutX="98.0" layoutY="419.0" prefHeight="110.0" prefWidth="400.0" />
+                <TextField id="idField" fx:id="opis" alignment="TOP_LEFT" editable="true" layoutX="98.0" layoutY="419.0" prefHeight="110.0" prefWidth="400.0" />
                 <Label font="$x2" layoutX="42.0" layoutY="463.0" text="Opis" />
                 <TextField id="idField" fx:id="kwota" editable="true" layoutX="98.0" layoutY="554.0" prefWidth="281.0" />
                 <Label font="$x2" layoutX="36.0" layoutY="557.0" text="Kwota" />
@@ -146,6 +146,35 @@
                 </ChoiceBox>
                 <Button id="delete" fx:id="deleteButton" font="$x3" layoutX="864.0" layoutY="657.0" mnemonicParsing="false" onAction="#deleteAkcja" prefHeight="30.0" prefWidth="214.0" text="Usuń akcję serwisową" visible="true" />
                 <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" font="$x3" layoutX="406.0" layoutY="663.0" prefWidth="429.0" text="Błąd - dane niezgodne z ograniczeniami" textAlignment="CENTER" textFill="#ff3333" underline="false" visible="false" wrapText="true" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab onSelectionChanged="#refreshSearch" text="Przeszukiwanie bazy danych">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <ListView id="clientList" fx:id="searchList" layoutX="14.0" layoutY="232.0" onMouseClicked="#modifySamochod" prefHeight="518.0" prefWidth="1172.0" />
+                <Button fx:id="searchButton" layoutX="556.0" layoutY="60.0" mnemonicParsing="false" onAction="#search" text="Szukaj">
+                  <font>
+                    <Font size="18.0" fx:id="x4" />
+                  </font>
+                </Button>
+                <TextField fx:id="searchBox" layoutX="74.0" layoutY="60.0" prefHeight="29.0" prefWidth="457.0" promptText="Podaj wyszukiwane wartości oddzielone spacjami" />
+                <Label font="$x4" layoutX="33.0" layoutY="185.0" prefHeight="20.999908447265625" prefWidth="166.0" text="Znaleziono" />
+                <Label fx:id="searchCounter" font="$x1" layoutX="137.0" layoutY="185.0" text="0" />
+                <Label font="$x4" layoutX="181.0" layoutY="185.0" text="rekordów" />
+                <Button id="searchButton" font="$x4" layoutX="958.0" layoutY="185.0" mnemonicParsing="false" onAction="#refreshSearch" text="Resetuj wyszukiwanie" />
+                <ChoiceBox id="tablesDropdown" fx:id="searchDropdown" layoutX="730.0" layoutY="62.0" prefHeight="26.0" prefWidth="228.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
+                    </FXCollections>
+                  </items>
+                </ChoiceBox>
+                <Label font="$x4" layoutX="745.0" layoutY="31.0" text="Przeszukiwana relacja" />
               </children>
             </AnchorPane>
           </content>

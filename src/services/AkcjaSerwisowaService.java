@@ -32,7 +32,7 @@ public class AkcjaSerwisowaService {
     }
 
     public static ResultSet getAkcje() {
-        return ConnectionManager.getStatementResultSet("select ID_AKCJI, ID_SAMOCHODU, ID_KLIENTA, OPIS, ID_FAKTURY, ID_PRACOWNIKA, ID_SAMOCHODU_ZASTEPCZEGO, DATA_ROZPOCZECIA, DATA_ZAKONCZENIA from AKCJA_SERWISOWA");
+        return ConnectionManager.getStatementResultSet("select ID_AKCJI, ID_SAMOCHODU, ID_KLIENTA, OPIS, ID_FAKTURY, ID_PRACOWNIKA, ID_SAMOCHODU_ZASTEPCZEGO, to_char(DATA_ROZPOCZECIA,'YYYY-MM-DD'), to_char(DATA_ZAKONCZENIA,'YYYY-MM-DD') from AKCJA_SERWISOWA");
     }
 
     public static ResultSet getAkcja(String ID) {
