@@ -145,6 +145,7 @@
                   </items>
                 </ChoiceBox>
                 <Button id="delete" fx:id="deleteButton" font="$x3" layoutX="864.0" layoutY="657.0" mnemonicParsing="false" onAction="#deleteAkcja" prefHeight="30.0" prefWidth="214.0" text="Usuń akcję serwisową" visible="true" />
+                <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" font="$x3" layoutX="406.0" layoutY="663.0" prefWidth="429.0" text="Błąd - dane niezgodne z ograniczeniami" textAlignment="CENTER" textFill="#ff3333" underline="false" visible="false" wrapText="true" />
               </children>
             </AnchorPane>
           </content>

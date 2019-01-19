@@ -37,8 +37,10 @@ public class SamochodEditViewController {
             rokProdukcji.setText(resultSet.getString(7));
             if (zastepczy) {
                 czyWypozyczony.setVisible(true);
-                if (resultSet.getString(8).equals("Tak"))
+                if (resultSet.getString(8).equals("Tak")){
                     czyWypozyczony.setSelected(true);
+                    delete.setDisable(true);
+                }
                 else
                     czyWypozyczony.setSelected(false);
             }

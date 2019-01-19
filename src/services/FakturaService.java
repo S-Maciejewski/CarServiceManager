@@ -17,7 +17,7 @@ public class FakturaService {
     }
 
     public static ResultSet getFaktura(String ID) {
-        return ConnectionManager.getStatementResultSet("ID_FAKTURY, KWOTA, TERMIN_PLATNOSCI from FAKTURA where ID_FAKTURY = '" + ID + "'");
+        return ConnectionManager.getStatementResultSet("select ID_FAKTURY, KWOTA, TERMIN_PLATNOSCI from FAKTURA where ID_FAKTURY = '" + ID + "'");
     }
 
     public static void deleteFaktura(String ID) throws SQLException {
