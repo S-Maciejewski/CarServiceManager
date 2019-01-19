@@ -27,4 +27,8 @@ public class FakturaService {
     public static void updateFaktura(String ID, String kwota, String terminPlatnosci) {
         ConnectionManager.executeStatement("update FAKTURA set KWOTA = '" + kwota+ "', TERMIN_PLATNOSCI = '" + terminPlatnosci + "' where ID_FAKTURY = '" + ID + "'");
     }
+
+    public static void updateFakturaKwota(String ID, String kwota) {
+        ConnectionManager.executeStatement("update FAKTURA set KWOTA = '" + kwota+ "' where ID_FAKTURY = '" + ID + "'");
+    }
 }

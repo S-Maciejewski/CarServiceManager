@@ -30,6 +30,7 @@ public class MainScreenController {
     @FXML
     private Label errorMsg;
 
+    private String selectedSamochodZastepczy;
 
     public void showKlienci() throws SQLException {
         ObservableList<String> klienciIndywidualni = FXCollections.observableArrayList();
@@ -335,6 +336,7 @@ public class MainScreenController {
             confirmButton.setText("Zatwierdź modyfikacje");
             confirmButton.setOnAction((event) -> modifyAkcja());
             errorMsg.setVisible(false);
+            selectedSamochodZastepczy = null;
 
             String selectedID = akcjeList.getSelectionModel().getSelectedItem().substring(0, akcjeList.getSelectionModel().getSelectedItem().indexOf(','));
             ResultSet resultSet = AkcjaSerwisowaService.getAkcja(selectedID);
@@ -342,9 +344,9 @@ public class MainScreenController {
             resultSet.next();
             akcjaId.setText(resultSet.getString(1));
             opis.setText(resultSet.getString(4));
-            dataRozpoczecia.setText(resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")));
+            dataRozpoczecia.setText(resultSet.getString(8));
             if (resultSet.getString(9) != null)
-                dataZakonczenia.setText(resultSet.getString(9).substring(0, resultSet.getString(9).indexOf(" ")));
+                dataZakonczenia.setText(resultSet.getString(9));
 
             if (resultSet.getString(6) != null)
                 for (String pracownik : pracownikDropdown.getItems())
@@ -369,7 +371,6 @@ public class MainScreenController {
                     kwota.setText(rs.getString(2));
                 }
 
-            //Mozliwosc odebrania samochodu zastepczego
             if (idSamochoduZastepczego != null) {
                 ObservableList<String> samochodyZastepcze = FXCollections.observableArrayList();
                 rs = SamochodService.getSamochody(true);
@@ -378,16 +379,20 @@ public class MainScreenController {
                         samochodyZastepcze.add(rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(4) + ", " + rs.getString(5));
                 }
                 samochodZastepczyDropdown.setItems(samochodyZastepcze);
+                
                 rs = SamochodService.getSamochod(true, idSamochoduZastepczego);
                 if (rs != null)
-                    if (rs.next()) {  //TODO Po update zaktualizowac status samochodu
+                    if (rs.next()) {
                         samochodyZastepcze.add("-");
                         samochodyZastepcze.add(rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(4) + ", " + rs.getString(5));
                         samochodZastepczyDropdown.setItems(samochodyZastepcze);
                     }
                 for (String samochod : samochodZastepczyDropdown.getItems())
-                    if (samochod.contains(idSamochoduZastepczego))
+                    if (samochod.contains(idSamochoduZastepczego)) {
                         samochodZastepczyDropdown.getSelectionModel().select(samochod);
+                        selectedSamochodZastepczy = samochod;
+                    }
+
             }
 
         }
@@ -418,7 +423,6 @@ public class MainScreenController {
         } else {
             errorMsg.setVisible(true);
         }
-
     }
 
     private boolean validate() {
@@ -426,12 +430,9 @@ public class MainScreenController {
             return false;
         if (klientDropdown.getSelectionModel().getSelectedItem() == null)
             return false;
-
-        if (dataRozpoczecia.getText() != null && !dataRozpoczecia.getText().equals(""))
-            if (!dataRozpoczecia.getText().matches("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"))
-                return false;
         if (dataZakonczenia.getText() != null && !dataZakonczenia.getText().equals(""))
-            if (!dataZakonczenia.getText().matches("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"))
+//            if (!dataZakonczenia.getText().matches("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"))
+            if (!dataZakonczenia.getText().matches("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$"))
                 return false;
         if (kwota.getText() != null && !kwota.getText().equals(""))
             if (!kwota.getText().matches("^\\d+(\\.\\d{1,2})?$"))
@@ -444,7 +445,42 @@ public class MainScreenController {
     }
 
     public void modifyAkcja() {
+        if (validate()) {
+            String idPracownika = null;
+            String idSamochoduZastepczego = null;
+            String dataZakonczeniaText = null;
+            if (pracownikDropdown.getSelectionModel().getSelectedItem() != null)
+                idPracownika = pracownikDropdown.getSelectionModel().getSelectedItem().substring(0, pracownikDropdown.getSelectionModel().getSelectedItem().indexOf(','));
+            if (samochodZastepczyDropdown.getSelectionModel().getSelectedItem() != null) {
+                if (selectedSamochodZastepczy != null && !samochodZastepczyDropdown.getSelectionModel().getSelectedItem().equals(selectedSamochodZastepczy)) {
+                    if (!samochodZastepczyDropdown.getSelectionModel().getSelectedItem().equals("-")) {
+                        SamochodService.toggleSamochodZastepczy(selectedSamochodZastepczy.substring(0, selectedSamochodZastepczy.indexOf(',')));
+                        idSamochoduZastepczego = samochodZastepczyDropdown.getSelectionModel().getSelectedItem().substring(0, samochodZastepczyDropdown.getSelectionModel().getSelectedItem().indexOf(','));
+                        SamochodService.toggleSamochodZastepczy(idSamochoduZastepczego);
+                    } else {
+                        SamochodService.toggleSamochodZastepczy(selectedSamochodZastepczy.substring(0, selectedSamochodZastepczy.indexOf(',')));
+                        idSamochoduZastepczego = null;
+                    }
+                } else
+                    idSamochoduZastepczego = samochodZastepczyDropdown.getSelectionModel().getSelectedItem().substring(0, samochodZastepczyDropdown.getSelectionModel().getSelectedItem().indexOf(','));
+            }
+            if (dataZakonczenia.getText().length() != 0)
+                dataZakonczeniaText = dataZakonczenia.getText();
+            if (kwota.getText().length() == 0)
+                kwota.setText("0");
 
+            AkcjaSerwisowaService.updateAkcja(akcjaId.getText(), samochodDropdown.getSelectionModel().getSelectedItem().substring(0, samochodDropdown.getSelectionModel().getSelectedItem().indexOf(',')),
+                    klientDropdown.getSelectionModel().getSelectedItem().substring(0, klientDropdown.getSelectionModel().getSelectedItem().indexOf(',')), opis.getText(), kwota.getText(),
+                    idPracownika, idSamochoduZastepczego, dataZakonczeniaText);
+
+            try {
+                showAkcje();
+            } catch (SQLException e) {
+                System.out.println("Error showing Akcje");
+            }
+        } else {
+            errorMsg.setVisible(true);
+        }
     }
 
     public void deleteAkcja() throws SQLException {

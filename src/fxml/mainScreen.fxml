@@ -119,7 +119,7 @@
                 <Label font="$x2" layoutX="42.0" layoutY="463.0" text="Opis" />
                 <TextField id="idField" fx:id="kwota" editable="true" layoutX="98.0" layoutY="554.0" prefWidth="281.0" />
                 <Label font="$x2" layoutX="36.0" layoutY="557.0" text="Kwota" />
-                <TextField id="idField" fx:id="dataRozpoczecia" editable="true" layoutX="798.0" layoutY="437.0" prefWidth="281.0" />
+                <TextField id="idField" fx:id="dataRozpoczecia" disable="true" editable="true" layoutX="798.0" layoutY="437.0" prefWidth="281.0" />
                 <Label font="$x2" layoutX="666.0" layoutY="440.0" text="Data rozpoczęcia" />
                 <TextField id="idField" fx:id="dataZakonczenia" editable="true" layoutX="798.0" layoutY="471.0" prefWidth="281.0" />
                 <Label font="$x2" layoutX="662.0" layoutY="474.0" text="Data zakończenia" />
