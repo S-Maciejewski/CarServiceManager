@@ -17,7 +17,7 @@ public class FakturaService {
     }
 
     public static ResultSet getFaktura(String ID) {
-        return ConnectionManager.getStatementResultSet("select ID_FAKTURY, KWOTA, TERMIN_PLATNOSCI from FAKTURA where ID_FAKTURY = '" + ID + "'");
+        return ConnectionManager.getStatementResultSet("select ID_FAKTURY, KWOTA, to_char(TERMIN_PLATNOSCI,'YYYY-MM-DD') from FAKTURA where ID_FAKTURY = '" + ID + "'");
     }
 
     public static void deleteFaktura(String ID) throws SQLException {
@@ -25,7 +25,7 @@ public class FakturaService {
     }
 
     public static void updateFaktura(String ID, String kwota, String terminPlatnosci) {
-        ConnectionManager.executeStatement("update FAKTURA set KWOTA = '" + kwota+ "', TERMIN_PLATNOSCI = '" + terminPlatnosci + "' where ID_FAKTURY = '" + ID + "'");
+        ConnectionManager.executeStatement("update FAKTURA set KWOTA = '" + kwota+ "', TERMIN_PLATNOSCI = to_date('" + terminPlatnosci + "', 'YYYY-MM-DD') where ID_FAKTURY = '" + ID + "'");
     }
 
     public static void updateFakturaKwota(String ID, String kwota) {

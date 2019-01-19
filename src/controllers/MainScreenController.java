@@ -362,7 +362,6 @@ public class MainScreenController {
                 if (samochod.substring(0, samochod.indexOf(',')).contains(resultSet.getString(3)))
                     samochodDropdown.getSelectionModel().select(samochod);
 
-            String idFaktury = resultSet.getString(5);
             String idSamochoduZastepczego = resultSet.getString(7);
 
             rs = FakturaService.getFaktura(resultSet.getString(5));
@@ -379,7 +378,7 @@ public class MainScreenController {
                         samochodyZastepcze.add(rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getString(4) + ", " + rs.getString(5));
                 }
                 samochodZastepczyDropdown.setItems(samochodyZastepcze);
-                
+
                 rs = SamochodService.getSamochod(true, idSamochoduZastepczego);
                 if (rs != null)
                     if (rs.next()) {
@@ -394,7 +393,6 @@ public class MainScreenController {
                     }
 
             }
-
         }
     }
 
@@ -431,7 +429,6 @@ public class MainScreenController {
         if (klientDropdown.getSelectionModel().getSelectedItem() == null)
             return false;
         if (dataZakonczenia.getText() != null && !dataZakonczenia.getText().equals(""))
-//            if (!dataZakonczenia.getText().matches("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$"))
             if (!dataZakonczenia.getText().matches("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$"))
                 return false;
         if (kwota.getText() != null && !kwota.getText().equals(""))
@@ -488,8 +485,20 @@ public class MainScreenController {
         showAkcje();
     }
 
-    public void modifyFaktura() {
+    public void modifyFaktura() throws IOException, SQLException {
+        String selectedString = fakturyList.getSelectionModel().getSelectedItem();
+        if(selectedString != null){
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/fakturaEditView.fxml"));
+            stage.setScene(new Scene(loader.load()));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Modyfikacja faktury");
 
+            String ID = selectedString != null ? selectedString.substring(0, selectedString.indexOf(',')) : null;
+            loader.<FakturaEditViewController>getController().setContext(ID);
+            stage.showAndWait();
+            showAkcje();
+        }
     }
 
 }

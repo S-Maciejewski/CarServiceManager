@@ -8,29 +8,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="280.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.CzescEditViewController">
+<AnchorPane prefHeight="280.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.FakturaEditViewController">
   <children>
-    <Label layoutX="226.0" layoutY="21.0" prefHeight="25.999908447265625" text="Edycja części">
+    <Label layoutX="226.0" layoutY="21.0" prefHeight="25.999908447265625" text="Edycja faktury">
       <font>
         <Font size="20.0" />
       </font>
     </Label>
     <TextField id="idField" fx:id="id" editable="false" layoutX="137.0" layoutY="82.0" prefWidth="398.0" />
-    <TextField id="imieNazwa" fx:id="nazwa" editable="true" layoutX="137.0" layoutY="115.0" prefWidth="398.0" />
-    <TextField id="nazwiskoNip" fx:id="cena" editable="true" layoutX="137.0" layoutY="149.0" prefWidth="398.0" />
-    <Label layoutX="48.0" layoutY="118.0" text="Nazwa">
+    <TextField id="imieNazwa" fx:id="kwota" editable="true" layoutX="137.0" layoutY="115.0" prefWidth="398.0" />
+    <TextField id="nazwiskoNip" fx:id="termin" editable="true" layoutX="137.0" layoutY="149.0" prefWidth="398.0" />
+    <Label layoutX="48.0" layoutY="118.0" text="Kwota">
       <font>
         <Font size="14.0" fx:id="x1" />
       </font>
     </Label>
-    <Label font="$x1" layoutX="5.0" layoutY="152.0" text="Cena jednostkowa" />
+    <Label font="$x1" layoutX="14.0" layoutY="149.0" text="Termin płatności" />
     <Label font="$x1" layoutX="64.0" layoutY="85.0" text="ID" />
     <Button fx:id="confirm" layoutX="376.0" layoutY="200.0" mnemonicParsing="false" onAction="#confirmChanges" text="Zatwierdź">
       <font>
         <Font size="16.0" fx:id="x2" />
       </font>
     </Button>
-    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteRecord" text="Usuń część" visible="true" />
+    <Button fx:id="delete" font="$x2" layoutX="111.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteRecord" text="Usuń fakturę" visible="true" />
     <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" font="$x2" layoutX="92.0" layoutY="235.0" prefWidth="429.0" text="Błąd - dane niezgodne z ograniczeniami" textAlignment="CENTER" textFill="#ff3333" underline="false" visible="false" wrapText="true" />
+    <Label layoutX="237.0" layoutY="175.0" text="Format daty: YYYY-MM-DD" />
   </children>
 </AnchorPane>
