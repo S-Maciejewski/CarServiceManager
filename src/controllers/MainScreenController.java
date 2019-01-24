@@ -318,9 +318,13 @@ public class MainScreenController {
 
         resultSet = AkcjaSerwisowaService.getAkcje();
         while (resultSet.next()) {
-            String dataZakonczeniaText = resultSet.getString(9) == null ? "w toku" : resultSet.getString(9).substring(0, resultSet.getString(9).indexOf(" "));
+//            System.out.println(resultSet.getString(1) + resultSet.getString(2) + resultSet.getString(3) + resultSet.getString(4) + resultSet.getString(5) +
+//                    resultSet.getString(6) + resultSet.getString(7) + resultSet.getString(8) + resultSet.getString(9));
+            String dataZakonczeniaText = resultSet.getString(9) == null ? "w toku" : resultSet.getString(9);
             String opisText = resultSet.getString(4) == null ? "brak opisu" : resultSet.getString(4);
-            akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")) + ", " + dataZakonczeniaText + ", " + opisText);
+//            akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")) + ", " + dataZakonczeniaText + ", " + opisText);
+            akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8) + ", " + dataZakonczeniaText + ", " + opisText);
+git
         }
         akcjeList.setItems(akcje);
 
