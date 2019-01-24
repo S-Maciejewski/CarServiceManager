@@ -324,7 +324,6 @@ public class MainScreenController {
             String opisText = resultSet.getString(4) == null ? "brak opisu" : resultSet.getString(4);
 //            akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8).substring(0, resultSet.getString(8).indexOf(" ")) + ", " + dataZakonczeniaText + ", " + opisText);
             akcje.add(resultSet.getString(1) + ", " + resultSet.getString(8) + ", " + dataZakonczeniaText + ", " + opisText);
-git
         }
         akcjeList.setItems(akcje);
 
